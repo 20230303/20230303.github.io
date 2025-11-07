@@ -11,11 +11,11 @@
 # https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#installing-the-theme
 
 # theme                  : "minimal-mistakes-jekyll"
-remote_theme           : "mmistakes/minimal-mistakes@4.27.3"
-minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+remote_theme             : "mmistakes/minimal-mistakes@4.27.3"
+minimal_mistakes_skin    : "neon" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
-locale                   : "cn-ZH"
+locale                   : "zh-CN"
 rtl                      : # true, false (default) # turns direction of the page into right to left for RTL languages
 title                    : "Kang的个人主页"
 title_separator          : "-"
@@ -42,8 +42,8 @@ comments:
   facebook:
     # https://developers.facebook.com/docs/plugins/comments
     appid                :
-    num_posts            : # 5 (default)
-    colorscheme          : # "light" (default), "dark"
+    num_posts            : 5 
+    colorscheme          : "light"
   utterances:
     theme                : # "github-light" (default), "github-dark"
     issue_term           : # "pathname" (default)
@@ -111,34 +111,34 @@ analytics:
     anonymize_ip         : # true, false (default)
 
 
-# Site Author
+# Site Author,作者信息
 author:
-  name             : "Your Name"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am an **amazing** person."
-  location         : "Somewhere"
-  email            :
+  name             : "Kang"
+  avatar           : "/assets/images/bio-photo.jpg" # path of avatar image, e.g. 
+  bio              : "这个人很懒，什么都没写。"
+  location         : "China"
+  email            : "kang7520@foxmail.com"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      # url: "mailto:your.name@email.com"
+      url: "Kang:kang7520@foxmail.com"
     - label: "Website"
       icon: "fas fa-fw fa-link"
-      # url: "https://your-website.com"
+      url: "https://20230303.github.io"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
-      # url: "https://twitter.com/"
+      url: "https://twitter.com/"
     - label: "Facebook"
       icon: "fab fa-fw fa-facebook-square"
-      # url: "https://facebook.com/"
+      url: "https://facebook.com/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      # url: "https://github.com/"
+      url: "https://github.com/20230303/"
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
-      # url: "https://instagram.com/"
+      url: "https://instagram.com/"
 
-# Site Footer
+# Site Footer，页脚信息
 footer:
   links:
     - label: "Twitter"
@@ -162,7 +162,7 @@ footer:
   since: "2013"
 
 
-# Reading Files
+# Reading Files，排除文件
 include:
   - .htaccess
   - _pages
@@ -201,7 +201,7 @@ encoding: "utf-8"
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 
 
-# Conversion
+# Conversion，Markdown处理器
 markdown: kramdown
 highlighter: rouge
 lsi: false
@@ -209,7 +209,7 @@ excerpt_separator: "\n\n"
 incremental: false
 
 
-# Markdown Processing
+# Markdown Processing，Kramdown设置
 kramdown:
   input: GFM
   hard_wrap: false
@@ -221,22 +221,22 @@ kramdown:
   enable_coderay: false
 
 
-# Sass/SCSS
+# Sass/SCSS，Sass设置
 sass:
   sass_dir: _sass
   style: compressed # https://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
 
 
-# Outputting
+# Outputting，输出的目录
 permalink: /:categories/:title/
 timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
-# Pagination with jekyll-paginate
+# Pagination with jekyll-paginate，分页设置
 paginate: 5 # amount of posts to show
 paginate_path: /page:num/
 
-# Pagination with jekyll-paginate-v2
+# Pagination with jekyll-paginate-v2，分页设置
 # See https://github.com/sverrirs/jekyll-paginate-v2/blob/master/README-GENERATOR.md#site-configuration
 #   for configuration details
 pagination:
@@ -258,7 +258,7 @@ pagination:
     after: 2
 
 
-# Plugins (previously gems:)
+# Plugins (previously gems:)，插件
 plugins:
   - jekyll-paginate
   - jekyll-sitemap
@@ -266,7 +266,7 @@ plugins:
   - jekyll-feed
   - jekyll-include-cache
 
-# mimic GitHub Pages with --safe
+# mimic GitHub Pages with --safe，白名单
 whitelist:
   - jekyll-paginate
   - jekyll-sitemap
