@@ -12,27 +12,27 @@
 
 # theme                  : "minimal-mistakes-jekyll"
 remote_theme             : "mmistakes/minimal-mistakes@4.27.3"
-minimal_mistakes_skin    : "neon" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+minimal_mistakes_skin    : "mint" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
 locale                   : "zh-CN"
-rtl                      : # true, false (default) # turns direction of the page into right to left for RTL languages
+rtl                      : # 默认false，设置为true时，页面将从右到左显示，适用于从右到左阅读的语言，例如阿拉伯语、希伯来语、波斯语等。true, false (default) # turns direction of the page into right to left for RTL languages
 title                    : "Kang的个人主页"
 title_separator          : "-"
-subtitle                 : # site tagline that appears below site title in masthead
+subtitle                 : # 副标题，site tagline that appears below site title in masthead
 name                     : "Kang"
-description              : "记录"
+description              : "个人主页·记录·分享"
 url                      : "https://20230303.github.io"
 baseurl                  : ""
-repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
-teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
-logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
-masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
-breadcrumbs              : # true, false (default)
+repository               : 20230303/20230303.github.io # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+teaser                   : # 默认缩略图的路径，例如 "/assets/images/500x300.png"
+logo                     : "/assets/images/logo01.jpg" # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
+masthead_title           : "自定义标题" # 覆盖页眉中显示的网站标题，使用 " " 表示不显示标题
+breadcrumbs              : true # 是否显示面包屑导航true, false (default)
 words_per_minute         : 200
-enable_copy_code_button  : # true, false (default)
-copyright                : # "copyright" name, defaults to site.title
-copyright_url            : # "copyright" URL, defaults to site.url
+enable_copy_code_button  : true # 是否显示复制代码按钮true, false (default)
+copyright                : # 显示版权信息，可以自定义显示的内容，例如 "copyright" name, defaults to site.title
+copyright_url            : # 版权信息的链接地址"copyright" URL, defaults to site.url
 comments:
   provider               : # false (default), "disqus", "discourse", "facebook", "staticman", "staticman_v2", "utterances", "giscus", "custom"
   disqus:
