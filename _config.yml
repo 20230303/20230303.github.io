@@ -121,7 +121,7 @@ author:
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      url: "Kang:kang7520@foxmail.com"
+      url: "mailto:kang7520@foxmail.com"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       url: "https://20230303.github.io"
