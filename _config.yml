@@ -25,7 +25,7 @@ description              : "个人主页·记录·分享"
 url                      : "https://20230303.github.io"
 baseurl                  : ""
 repository               : 20230303/20230303.github.io # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
-teaser                   : # 默认缩略图的路径，例如 "/assets/images/500x300.png"
+teaser                   : "/assets/images/500x300.png" # 默认缩略图的路径，例如 "/assets/images/500x300.png"
 logo                     : "/assets/images/logo01.jpg" # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
 masthead_title           : "K's Blog" # 覆盖页眉中显示的网站标题，使用 " " 表示不显示标题
 breadcrumbs              : true # 是否显示面包屑导航true, false (default)
@@ -114,8 +114,8 @@ analytics:
 # Site Author,作者信息
 author:
   name             : "Kang"
-  avatar           : "/assets/images/bio-photo.jpg" # path of avatar image, e.g. 
-  bio              : "这个人很懒"
+  avatar           : "/assets/images/bio-photo01.jpg" # path of avatar image, e.g. 
+  bio              : "保持头脑清醒"
   location         : "China"
   email            : "kang7520@foxmail.com"
   links:
