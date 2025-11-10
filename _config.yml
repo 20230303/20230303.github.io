@@ -19,14 +19,14 @@ locale                   : "zh-CN"
 rtl                      : # 默认false，设置为true时，页面将从右到左显示，适用于从右到左阅读的语言，例如阿拉伯语、希伯来语、波斯语等。true, false (default) # turns direction of the page into right to left for RTL languages
 title                    : "Kang的个人主页"
 title_separator          : "-"
-subtitle                 : # 副标题，site tagline that appears below site title in masthead
+subtitle                 : Version 0.1 # 副标题，site tagline that appears below site title in masthead
 name                     : "Kang"
 description              : "个人主页·记录·分享"
 url                      : "https://20230303.github.io"
 baseurl                  : ""
 repository               : 20230303/20230303.github.io # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
-teaser                   : "/assets/images/500x300.png" # 默认缩略图的路径，例如 "/assets/images/500x300.png"
-logo                     : "/assets/images/logo01.jpg" # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
+teaser                   : "/assets/images/teaser01.jpg" # 默认缩略图的路径，例如 "/assets/images/500x300.png"
+logo                     : "/assets/images/logo02." # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
 masthead_title           : "K's Blog" # 覆盖页眉中显示的网站标题，使用 " " 表示不显示标题
 breadcrumbs              : true # 是否显示面包屑导航true, false (default)
 words_per_minute         : 200
@@ -68,7 +68,7 @@ reCaptcha: # reCaptcha配置，集成Google reCaptcha，以防止垃圾评论和
 atom_feed: # 自定义 Atom Feed 和网站搜索功能
   path                   : # blank (default) uses feed.xml
   hide                   : # true, false (default)
-search                   : # true, false (default)
+search                   : true # true, false (default)
 search_full_content      : # 搜索结果显示完整内容true, false (default)
 search_provider          : # 搜索提供者lunr (default), algolia, google
 lunr:
@@ -159,7 +159,7 @@ footer:
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       # url:
-  since: "2013"
+  since: "2025"
 
 
 # Reading Files，排除文件
