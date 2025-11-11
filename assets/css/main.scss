@@ -7,6 +7,8 @@ search: false
 
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
+//导入Iconfont
+@import "../../fonts/iconfont/iconfont.css";
 
 // 添加全局背景图
 body {

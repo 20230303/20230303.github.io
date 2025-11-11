@@ -1,0 +1,30 @@
+{
+  "id": "5062583",
+  "name": "MYwebsite",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "11999365",
+      "name": "抖音",
+      "font_class": "douyin",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "24686112",
+      "name": "百度贴吧",
+      "font_class": "baidutieba",
+      "unicode": "e6f5",
+      "unicode_decimal": 59125
+    },
+    {
+      "icon_id": "38402687",
+      "name": "哔哩哔哩-off-copy",
+      "font_class": "bilibili-off",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    }
+  ]
+}

@@ -126,10 +126,10 @@ author:
       icon: "fas fa-fw fa-link"
       url: "https://20230303.github.io"
     - label: "哔哩哔哩"
-      icon: "iconfont icon-bilibili"  # 替换为你在Iconfont中定义的类名
+      icon: "iconfont icon-bilibili-off"  # 替换为你在Iconfont中定义的类名
       url: "https://space.bilibili.com/496677580"
     - label: "百度贴吧"
-      icon: "iconfont icon-tieba"     # 同上，使用贴吧对应的类名
+      icon: "iconfont icon-baidutieba"     # 同上，使用贴吧对应的类名
       url: "https://tieba.baidu.com/home/main?un=%E5%8D%88%E5%90%8E%E5%9B%9B%E7%82%B9de%E9%98%B3%E5%85%89&fr=home&id=tb.1.5d5023c2.y-QLovnZNys3FLkHSf69RA"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
