@@ -8,7 +8,7 @@ search: false
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
 
-// 全局背景图和半透明白色遮罩
+// 添加全局背景图
 body {
   position: relative; // 为伪元素提供定位参考
   background-image: url('/assets/images/bg01.webp');
@@ -18,7 +18,7 @@ body {
   background-repeat: no-repeat;  // 不重复背景图
 }
 
-// 半透明白色遮罩层 - 修改为直接添加到HTML元素上
+// 半透明白色遮罩层 - 常驻显示
 html {
   position: relative;
 }
@@ -45,7 +45,6 @@ html::before {
 .page__footer {
   position: relative;
   z-index: 1;
-  // 移除页脚的背景色，让遮罩能透过来
   background-color: transparent !important;
 }
 
