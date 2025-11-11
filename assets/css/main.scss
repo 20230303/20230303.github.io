@@ -7,3 +7,14 @@ search: false
 
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
+
+// 添加全局背景图
+body {
+  background-image: url('/assets/images/bg01.webp');
+  background-size: cover;  // 让背景图覆盖整个页面
+  background-attachment: fixed;  // 固定背景图不随页面滚动
+  background-position: center;  // 居中显示背景图
+  background-repeat: no-repeat;  // 不重复背景图
+}
+
+
