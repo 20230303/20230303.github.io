@@ -126,16 +126,16 @@ author:
       icon: "fas fa-fw fa-link"
       url: "https://20230303.github.io"
     - label: "哔哩哔哩"
-      icon: "iconfont icon-bilibili-off"  # 替换为你在Iconfont中定义的类名
+      icon: "iconfont #icon-bilibili-off"  # 替换为你在Iconfont中定义的类名
       url: "https://space.bilibili.com/496677580"
     - label: "百度贴吧"
-      icon: "iconfont icon-baidutieba"     # 同上，使用贴吧对应的类名
+      icon: "iconfont #icon-baidutieba"     # 同上，使用贴吧对应的类名
       url: "https://tieba.baidu.com/home/main?un=%E5%8D%88%E5%90%8E%E5%9B%9B%E7%82%B9de%E9%98%B3%E5%85%89&fr=home&id=tb.1.5d5023c2.y-QLovnZNys3FLkHSf69RA"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/20230303/"
     - label: "抖音"
-      icon: "iconfont icon-douyin"  # Iconfont上可搜索到抖音官方风格图标，使用对应类名
+      icon: "iconfont #icon-douyin"  # Iconfont上可搜索到抖音官方风格图标，使用对应类名
       url: "https://www.douyin.com/"
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
