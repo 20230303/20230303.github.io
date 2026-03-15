@@ -1,451 +1,72 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>游戏开发者个人主页</title>
-    <!-- TailwindCSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <!-- 自定义配置 -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#6366f1',
-                        secondary: '#10b981',
-                        dark: '#1f2937',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
-    
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .content-auto {
-                content-visibility: auto;
-            }
-            .card-hover {
-                @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
-            }
-            .section-padding {
-                @apply py-16 md:py-24;
-            }
-        }
-        
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        .nav-scrolled {
-            @apply bg-white/90 backdrop-blur-md shadow-sm;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>个人主页</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  html{scroll-behavior:smooth;}
+  .card-hover{transition:all .3s;transform:translateY(0)}
+  .card-hover:hover{transform:translateY(-4px);box-shadow:0 10px 20px rgba(0,0,0,.1);}
+</style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans">
-    <!-- 导航栏 -->
-    <nav id="navbar" class="fixed w-full z-50 py-4 transition-all duration-300">
-        <div class="container mx-auto px-4 md:px-8 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-primary" id="siteTitle">GameDev<span class="text-secondary">.Me</span></a>
-            
-            <!-- 桌面导航 -->
-            <div class="hidden md:flex space-x-8">
-                <a href="#about" class="font-medium hover:text-primary transition-colors">关于我</a>
-                <a href="#games" class="font-medium hover:text-primary transition-colors">游戏作品</a>
-                <a href="#designs" class="font-medium hover:text-primary transition-colors">游戏策划</a>
-                <a href="#materials" class="font-medium hover:text-primary transition-colors">图像素材</a>
-                <a href="admin.html" class="font-medium text-secondary hover:text-secondary/80 transition-colors">管理后台</a>
-            </div>
-            
-            <!-- 移动端菜单按钮 -->
-            <button id="menuBtn" class="md:hidden text-gray-700 focus:outline-none">
-                <i class="fas fa-bars text-xl"></i>
-            </button>
-        </div>
-        
-        <!-- 移动端导航菜单 -->
-        <div id="mobileMenu" class="md:hidden hidden bg-white shadow-lg absolute w-full top-full left-0 py-4">
-            <div class="container mx-auto px-4 flex flex-col space-y-4">
-                <a href="#about" class="font-medium hover:text-primary transition-colors py-2">关于我</a>
-                <a href="#games" class="font-medium hover:text-primary transition-colors py-2">游戏作品</a>
-                <a href="#designs" class="font-medium hover:text-primary transition-colors py-2">游戏策划</a>
-                <a href="#materials" class="font-medium hover:text-primary transition-colors py-2">图像素材</a>
-                <a href="admin.html" class="font-medium text-secondary hover:text-secondary/80 transition-colors py-2">管理后台</a>
-            </div>
-        </div>
-    </nav>
+<body class="bg-gray-50">
 
-    <!-- 英雄区 -->
-    <header class="pt-32 pb-20 bg-gradient-to-br from-primary/10 to-secondary/10">
-        <div class="container mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center">
-            <div class="md:w-1/2 mb-10 md:mb-0">
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-                    你好，我是 <span class="text-primary" id="heroName">游戏开发者</span>
-                </h1>
-                <p class="text-xl text-gray-600 mb-8" id="heroIntro">热爱游戏开发与创作</p>
-                <div class="flex space-x-4">
-                    <a href="#games" class="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors">
-                        查看作品 <i class="fas fa-arrow-right ml-2"></i>
-                    </a>
-                    <a href="#about" class="border border-primary text-primary px-6 py-3 rounded-lg font-medium hover:bg-primary/10 transition-colors">
-                        了解更多
-                    </a>
-                </div>
-            </div>
-            <div class="md:w-1/2 flex justify-center">
-                <div class="w-64 h-64 rounded-full bg-gradient-to-r from-primary/20 to-secondary/20 flex items-center justify-center border-4 border-white shadow-xl">
-                    <i class="fas fa-gamepad text-8xl text-primary/80"></i>
-                </div>
-            </div>
-        </div>
-    </header>
+<nav class="fixed w-full bg-white shadow p-4 z-10">
+  <div class="max-w-5xl mx-auto flex justify-between items-center">
+    <a class="text-xl font-bold text-indigo-600" id="logo">GameDev<span class="text-emerald-500">.Me</span></a>
+    <div class="flex gap-4">
+      <a href="#about">关于</a>
+      <a href="#games">作品</a>
+      <a href="admin.html">管理</a>
+    </div>
+  </div>
+</nav>
 
-    <main>
-        <!-- 关于我板块 -->
-        <section id="about" class="section-padding bg-white">
-            <div class="container mx-auto px-4 md:px-8">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">关于我</h2>
-                
-                <div class="max-w-3xl mx-auto">
-                    <div class="flex flex-col md:flex-row gap-8">
-                        <div class="md:w-1/3">
-                            <div class="bg-gray-100 p-6 rounded-xl">
-                                <h3 class="text-xl font-semibold mb-4 text-primary">基本信息</h3>
-                                <ul class="space-y-3" id="contactList">
-                                    <li class="flex items-center">
-                                        <i class="fas fa-user text-secondary w-6"></i>
-                                        <span id="infoName">游戏开发者</span>
-                                    </li>
-                                    <li class="flex items-center">
-                                        <i class="fas fa-envelope text-secondary w-6"></i>
-                                        <span id="infoContact">暂无联系方式</span>
-                                    </li>
-                                    <li class="flex items-center">
-                                        <i class="fas fa-gamepad text-secondary w-6"></i>
-                                        <span>游戏开发/策划</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <div class="md:w-2/3">
-                            <h3 class="text-xl font-semibold mb-4 text-primary">个人简介</h3>
-                            <p class="text-gray-700 mb-4" id="infoIntro">
-                                我是一名热爱游戏开发的独立创作者，致力于打造有趣、有温度的游戏作品。
-                            </p>
-                            
-                            <div class="mt-6 flex flex-wrap gap-2">
-                                <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm">Unity</span>
-                                <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm">游戏策划</span>
-                                <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm">像素艺术</span>
-                                <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm">关卡设计</span>
-                                <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm">2D游戏</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+<div class="h-20"></div>
 
-        <!-- 游戏作品板块 -->
-        <section id="games" class="section-padding bg-gray-50">
-            <div class="container mx-auto px-4 md:px-8">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">游戏作品</h2>
-                
-                <div id="gameList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- 加载占位 -->
-                    <div class="col-span-full flex justify-center items-center py-12 text-gray-500">
-                        <i class="fas fa-spinner fa-spin mr-2"></i> 加载游戏作品中...
-                    </div>
-                </div>
-            </div>
-        </section>
+<div class="max-w-5xl mx-auto px-4">
+  <section id="about" class="py-10">
+    <h2 class="text-2xl font-bold mb-4">关于我</h2>
+    <div class="p-6 bg-white rounded-xl shadow">
+      <p class="text-lg mb-2" id="name_card"></p>
+      <p class="text-gray-600 mb-2" id="intro_card"></p>
+      <p class="text-gray-500" id="contact_card"></p>
+    </div>
+  </section>
 
-        <!-- 游戏策划板块 -->
-        <section id="designs" class="section-padding bg-white">
-            <div class="container mx-auto px-4 md:px-8">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">游戏策划</h2>
-                
-                <div id="designList" class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- 加载占位 -->
-                    <div class="col-span-full flex justify-center items-center py-12 text-gray-500">
-                        <i class="fas fa-spinner fa-spin mr-2"></i> 加载策划案中...
-                    </div>
-                </div>
-            </div>
-        </section>
+  <section id="games" class="py-10">
+    <h2 class="text-2xl font-bold mb-4">游戏作品</h2>
+    <div id="game_list" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+  </section>
+</div>
 
-        <!-- 图像素材板块 -->
-        <section id="materials" class="section-padding bg-gray-50">
-            <div class="container mx-auto px-4 md:px-8">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">图像素材</h2>
-                
-                <div class="mb-8 text-center">
-                    <p class="text-gray-600 max-w-2xl mx-auto">
-                        这里展示我创作的游戏图像素材，包括像素画、UI素材、场景原画、角色设计等。
-                    </p>
-                </div>
-                
-                <!-- 素材网格 -->
-                <div id="materialList" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                    <!-- 加载占位 -->
-                    <div class="col-span-full flex justify-center items-center py-12 text-gray-500">
-                        <i class="fas fa-spinner fa-spin mr-2"></i> 加载图像素材中...
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+<script>
+const CONFIG = {
+  owner: "20230303",
+  repo: "20230303.github.io",
+  branch: "main"
+};
 
-    <!-- 页脚 -->
-    <footer class="bg-dark text-white py-12">
-        <div class="container mx-auto px-4 md:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0">
-                    <h3 class="text-2xl font-bold mb-2" id="footerTitle">GameDev.Me</h3>
-                    <p class="text-gray-400" id="footerCopyright">© 2025 游戏开发者. 保留所有权利</p>
-                </div>
-                
-                <div class="flex space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                        <i class="fab fa-github text-xl"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                        <i class="fab fa-bilibili text-xl"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                        <i class="fas fa-envelope text-xl"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </footer>
+async function load(){
+  const res=await fetch(`https://raw.githubusercontent.com/${CONFIG.owner}/${CONFIG.repo}/${CONFIG.branch}/data.json`);
+  const data=await res.json();
+  document.getElementById("logo").innerHTML = `${data.name||"GameDev"}<span class="text-emerald-500">.Me</span>`;
+  document.getElementById("name_card").textContent=data.name||"未设置";
+  document.getElementById("intro_card").textContent=data.intro||"这家伙很懒什么都没写";
+  document.getElementById("contact_card").textContent=data.contact||"无联系方式";
 
-    <!-- JavaScript -->
-    <script>
-        // 配置（替换为你的GitHub信息）
-        const CONFIG = {
-            owner: "20230303",  // 例如：octocat
-            repo: "20230303.github.io",    // 例如：octocat.github.io
-            branch: "main"              // 仓库分支
-        };
-
-        // 导航栏滚动效果
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('nav-scrolled');
-            } else {
-                navbar.classList.remove('nav-scrolled');
-            }
-        });
-        
-        // 移动端菜单切换
-        const menuBtn = document.getElementById('menuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            const icon = menuBtn.querySelector('i');
-            if (mobileMenu.classList.contains('hidden')) {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            } else {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            }
-        });
-        
-        // 点击移动端菜单项后关闭菜单
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-                const icon = menuBtn.querySelector('i');
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            });
-        });
-
-        // 加载并渲染数据
-        async function loadAndRenderData() {
-            try {
-                // 加载data.json - 优先使用raw.githubusercontent.com（更稳定）
-                let data;
-                try {
-                    const res = await fetch(`https://raw.githubusercontent.com/${CONFIG.owner}/${CONFIG.repo}/${CONFIG.branch}/data.json`);
-                    if (res.status === 404) {
-                        // 文件不存在，初始化空数据
-                        data = {
-                            name: "游戏开发者",
-                            intro: "热爱游戏开发与创作",
-                            contact: "",
-                            games: [],
-                            designs: [],
-                            materials: []
-                        };
-                    } else if (!res.ok) {
-                        throw new Error(`HTTP错误: ${res.status}`);
-                    } else {
-                        data = await res.json();
-                    }
-                } catch (err) {
-                    // 备用加载方式
-                    console.log("备用加载方式：", err);
-                    const res = await fetch(`https://${CONFIG.owner}.github.io/${CONFIG.repo}/data.json`);
-                    if (res.ok) {
-                        data = await res.json();
-                    } else {
-                        // 最终降级到默认数据
-                        data = {
-                            name: "游戏开发者",
-                            intro: "热爱游戏开发与创作",
-                            contact: "",
-                            games: [],
-                            designs: [],
-                            materials: []
-                        };
-                    }
-                }
-
-                // 更新页面标题和个人信息
-                document.title = `${data.name || "游戏开发者"} - 个人主页`;
-                
-                // 修复：使用innerHTML正确渲染带样式的标题
-                const siteName = data.name || "GameDev";
-                document.getElementById("siteTitle").innerHTML = `${siteName}<span class="text-secondary">.Me</span>`;
-                
-                document.getElementById("heroName").innerText = data.name || "游戏开发者";
-                document.getElementById("heroIntro").innerText = data.intro || "热爱游戏开发与创作";
-                document.getElementById("infoName").innerText = data.name || "游戏开发者";
-                document.getElementById("infoContact").innerText = data.contact || "暂无联系方式";
-                document.getElementById("infoIntro").innerText = data.intro || "我是一名热爱游戏开发的独立创作者，致力于打造有趣、有温度的游戏作品。";
-                document.getElementById("footerTitle").innerText = data.name || "GameDev.Me";
-                document.getElementById("footerCopyright").innerText = `© 2025 ${data.name || "游戏开发者"}. 保留所有权利`;
-
-                // 渲染游戏作品
-                const gameList = document.getElementById("gameList");
-                if (data.games && data.games.length > 0) {
-                    gameList.innerHTML = "";
-                    data.games.forEach(game => {
-                        const card = document.createElement("div");
-                        card.className = "bg-white rounded-xl shadow-md overflow-hidden card-hover";
-                        card.innerHTML = `
-                            <img src="${game.imgUrl}" alt="${game.title}" class="w-full h-48 object-cover" onerror="this.src='https://via.placeholder.com/400x240?text=图片加载失败'">
-                            <div class="p-6">
-                                <h3 class="text-xl font-semibold mb-2">${game.title}</h3>
-                                <p class="text-gray-600 mb-4">${game.desc || "暂无描述"}</p>
-                                <div class="flex space-x-3">
-                                    <a href="${game.imgUrl}" target="_blank" class="text-primary hover:text-primary/80 flex items-center">
-                                        <i class="fas fa-eye mr-1"></i> 查看
-                                    </a>
-                                </div>
-                            </div>
-                        `;
-                        gameList.appendChild(card);
-                    });
-                } else {
-                    gameList.innerHTML = `
-                        <div class="col-span-full flex flex-col justify-center items-center py-12 text-gray-500">
-                            <i class="fas fa-gamepad text-4xl mb-4"></i>
-                            <p>暂无游戏作品，快去管理后台上传吧！</p>
-                        </div>
-                    `;
-                }
-
-                // 渲染策划案
-                const designList = document.getElementById("designList");
-                if (data.designs && data.designs.length > 0) {
-                    designList.innerHTML = "";
-                    data.designs.forEach(design => {
-                        const card = document.createElement("div");
-                        card.className = "bg-gray-50 rounded-xl p-6 card-hover";
-                        card.innerHTML = `
-                            <div class="flex items-start mb-4">
-                                <div class="bg-primary/20 text-primary p-3 rounded-lg mr-4">
-                                    <i class="fas fa-file-alt text-2xl"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-xl font-semibold mb-2">${design.title}</h3>
-                                    <p class="text-gray-600 mb-4">${design.desc || "暂无描述"}</p>
-                                    <a href="${design.fileUrl}" target="_blank" class="text-primary hover:text-primary/80 flex items-center" download>
-                                        <i class="fas fa-download mr-1"></i> 下载文档
-                                    </a>
-                                </div>
-                            </div>
-                        `;
-                        designList.appendChild(card);
-                    });
-                } else {
-                    designList.innerHTML = `
-                        <div class="col-span-full flex flex-col justify-center items-center py-12 text-gray-500">
-                            <i class="fas fa-file-alt text-4xl mb-4"></i>
-                            <p>暂无游戏策划案，快去管理后台上传吧！</p>
-                        </div>
-                    `;
-                }
-
-                // 渲染图像素材
-                const materialList = document.getElementById("materialList");
-                if (data.materials && data.materials.length > 0) {
-                    materialList.innerHTML = "";
-                    data.materials.forEach(material => {
-                        const card = document.createElement("div");
-                        card.className = "group relative overflow-hidden rounded-lg card-hover";
-                        card.innerHTML = `
-                            <img src="${material.url}" alt="图像素材" class="w-full h-32 object-cover" onerror="this.src='https://via.placeholder.com/200x120?text=图片加载失败'">
-                            <div class="absolute inset-0 bg-primary/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                <a href="${material.url}" target="_blank" class="text-white px-3 py-1 bg-white/20 rounded">
-                                    <i class="fas fa-expand mr-1"></i> 查看
-                                </a>
-                            </div>
-                        `;
-                        materialList.appendChild(card);
-                    });
-                } else {
-                    materialList.innerHTML = `
-                        <div class="col-span-full flex flex-col justify-center items-center py-12 text-gray-500">
-                            <i class="fas fa-images text-4xl mb-4"></i>
-                            <p>暂无图像素材，快去管理后台上传吧！</p>
-                        </div>
-                    `;
-                }
-
-            } catch (err) {
-                console.error("加载数据失败：", err);
-                // 错误状态下的UI
-                document.getElementById("gameList").innerHTML = `
-                    <div class="col-span-full flex flex-col justify-center items-center py-12 text-red-500">
-                        <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
-                        <p>游戏作品加载失败</p>
-                        <p class="text-sm mt-2">${err.message}</p>
-                    </div>
-                `;
-                document.getElementById("designList").innerHTML = `
-                    <div class="col-span-full flex flex-col justify-center items-center py-12 text-red-500">
-                        <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
-                        <p>策划案加载失败</p>
-                        <p class="text-sm mt-2">${err.message}</p>
-                    </div>
-                `;
-                document.getElementById("materialList").innerHTML = `
-                    <div class="col-span-full flex flex-col justify-center items-center py-12 text-red-500">
-                        <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
-                        <p>图像素材加载失败</p>
-                        <p class="text-sm mt-2">${err.message}</p>
-                    </div>
-                `;
-            }
-        }
-
-        // 页面加载完成后执行
-        window.addEventListener('DOMContentLoaded', loadAndRenderData);
-    </script>
+  const list=document.getElementById("game_list");
+  if(data.games)data.games.forEach(g=>{
+    const div=document.createElement("div");
+    div.className="bg-white rounded-xl shadow p-4 card-hover";
+    div.innerHTML=`<img src="${g.imgUrl}" class="rounded w-full h-40 object-cover mb-2"><h3 class="font-bold">${g.title}</h3><p class="text-sm text-gray-600">${g.desc}</p>`;
+    list.appendChild(div);
+  })
+}
+load();
+</script>
 </body>
 </html>
