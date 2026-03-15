@@ -316,7 +316,11 @@
 
                 // 更新页面标题和个人信息
                 document.title = `${data.name || "游戏开发者"} - 个人主页`;
-                document.getElementById("siteTitle").innerText = (data.name || "GameDev") + "<span class='text-secondary'>.Me</span>";
+                
+                // 修复：使用innerHTML正确渲染带样式的标题
+                const siteName = data.name || "GameDev";
+                document.getElementById("siteTitle").innerHTML = `${siteName}<span class="text-secondary">.Me</span>`;
+                
                 document.getElementById("heroName").innerText = data.name || "游戏开发者";
                 document.getElementById("heroIntro").innerText = data.intro || "热爱游戏开发与创作";
                 document.getElementById("infoName").innerText = data.name || "游戏开发者";
