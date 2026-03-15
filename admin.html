@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理后台 - 游戏开发者主页</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <h1 class="text-2xl font-bold mb-4 text-indigo-600">主页管理后台</h1>
+            
+            <!-- 配置区 -->
+            <div class="mb-8 p-4 bg-gray-50 rounded-lg">
+                <h2 class="font-bold mb-2">基础配置（必填）</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">GitHub 用户名</label>
+                        <input type="text" id="owner" class="w-full border rounded px-3 py-2" placeholder="例如：octocat" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">GitHub 仓库名</label>
+                        <input type="text" id="repo" class="w-full border rounded px-3 py-2" placeholder="例如：octocat.github.io" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">仓库分支</label>
+                        <input type="text" id="branch" class="w-full border rounded px-3 py-2" value="main" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Personal Access Token</label>
+                        <input type="password" id="token" class="w-full border rounded px-3 py-2" placeholder="你的GitHub Token" required>
+                    </div>
+                </div>
+                <button onclick="saveConfig()" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">保存配置</button>
+                <p class="text-xs text-gray-500 mt-2">配置会保存在本地，仅用于调用GitHub API，不会上传</p>
+            </div>
+
+            <!-- 个人信息编辑 -->
+            <div class="mb-8">
+                <h2 class="font-bold text-lg mb-4">个人信息</h2>
+                <div class="grid grid-cols-1 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">主页标题/姓名</label>
+                        <input type="text" id="name" class="w-full border rounded px-3 py-2" placeholder="例如：张三的游戏开发主页">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">个人介绍</label>
+                        <textarea id="intro" class="w-full border rounded px-3 py-2" rows="3" placeholder="介绍一下自己"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">联系方式</label>
+                        <input type="text" id="contact" class="w-full border rounded px-3 py-2" placeholder="邮箱/微信/GitHub链接等">
+                    </div>
+                </div>
+                <button onclick="saveInfo()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">保存个人信息</button>
+            </div>
+
+            <!-- 游戏作品上传 -->
+            <div class="mb-8">
+                <h2 class="font-bold text-lg mb-4">新增游戏作品</h2>
+                <div class="grid grid-cols-1 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">作品名称</label>
+                        <input type="text" id="gameTitle" class="w-full border rounded px-3 py-2" placeholder="游戏名称">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">作品描述</label>
+                        <textarea id="gameDesc" class="w-full border rounded px-3 py-2" rows="2" placeholder="游戏简介"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">作品封面图</label>
+                        <input type="file" id="gameImg" class="w-full border rounded px-3 py-2" accept="image/*">
+                    </div>
+                </div>
+                <button onclick="uploadGame()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">上传游戏作品</button>
+            </div>
+
+            <!-- 策划案上传 -->
+            <div class="mb-8">
+                <h2 class="font-bold text-lg mb-4">新增游戏策划案</h2>
+                <div class="grid grid-cols-1 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">策划案标题</label>
+                        <input type="text" id="designTitle" class="w-full border rounded px-3 py-2" placeholder="策划案名称">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">策划案描述</label>
+                        <textarea id="designDesc" class="w-full border rounded px-3 py-2" rows="2" placeholder="策划案简介"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">策划案文件</label>
+                        <input type="file" id="designFile" class="w-full border rounded px-3 py-2">
+                    </div>
+                </div>
+                <button onclick="uploadDesign()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">上传策划案</button>
+            </div>
+
+            <!-- 图像素材上传 -->
+            <div class="mb-8">
+                <h2 class="font-bold text-lg mb-4">上传图像素材</h2>
+                <div class="grid grid-cols-1 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">选择图片（可多选）</label>
+                        <input type="file" id="materialFiles" class="w-full border rounded px-3 py-2" accept="image/*" multiple>
+                    </div>
+                </div>
+                <button onclick="uploadMaterials()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">上传图像素材</button>
+            </div>
+
+            <!-- 操作反馈 -->
+            <div id="message" class="mt-6 p-4 rounded hidden"></div>
+        </div>
+
+        <div class="text-center text-sm text-gray-500">
+            <a href="index.html" class="text-indigo-600 hover:underline">返回展示主页</a>
+        </div>
+    </div>
+
+    <script>
+        // 本地存储配置
+        function saveConfig() {
+            const config = {
+                owner: document.getElementById("owner").value,
+                repo: document.getElementById("repo").value,
+                branch: document.getElementById("branch").value,
+                token: document.getElementById("token").value
+            };
+            localStorage.setItem("githubConfig", JSON.stringify(config));
+            showMessage("配置保存成功！", "success");
+        }
+
+        // 加载本地配置
+        window.onload = function() {
+            const config = JSON.parse(localStorage.getItem("githubConfig")) || {};
+            if (config.owner) document.getElementById("owner").value = config.owner;
+            if (config.repo) document.getElementById("repo").value = config.repo;
+            if (config.branch) document.getElementById("branch").value = config.branch;
+            if (config.token) document.getElementById("token").value = config.token;
+            
+            // 加载已有的个人信息
+            loadData().then(data => {
+                if (data.name) document.getElementById("name").value = data.name;
+                if (data.intro) document.getElementById("intro").value = data.intro;
+                if (data.contact) document.getElementById("contact").value = data.contact;
+            });
+        };
+
+        // 显示操作反馈
+        function showMessage(text, type) {
+            const msg = document.getElementById("message");
+            msg.textContent = text;
+            msg.className = `mt-6 p-4 rounded ${type === "success" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`;
+            setTimeout(() => {
+                msg.className = "mt-6 p-4 rounded hidden";
+            }, 3000);
+        }
+
+        // 获取GitHub API请求头
+        function getHeaders() {
+            const config = JSON.parse(localStorage.getItem("githubConfig"));
+            if (!config.token) {
+                showMessage("请先填写并保存GitHub配置！", "error");
+                return null;
+            }
+            return {
+                "Authorization": `token ${config.token}`,
+                "Accept": "application/vnd.github.v3+json"
+            };
+        }
+
+        // 获取配置信息
+        function getConfig() {
+            const config = JSON.parse(localStorage.getItem("githubConfig"));
+            if (!config.owner || !config.repo || !config.branch) {
+                showMessage("请先填写并保存GitHub配置！", "error");
+                return null;
+            }
+            return config;
+        }
+
+        // 加载data.json数据
+        async function loadData() {
+            const config = getConfig();
+            if (!config) return { games: [], designs: [], materials: [] };
+            
+            try {
+                const res = await fetch(`https://api.github.com/repos/${config.owner}/${config.repo}/contents/data.json?ref=${config.branch}`, {
+                    headers: getHeaders()
+                });
+                
+                // 如果文件不存在，返回空数据
+                if (res.status === 404) {
+                    return { games: [], designs: [], materials: [] };
+                }
+                
+                const data = await res.json();
+                const content = atob(data.content); // 解码Base64
+                return JSON.parse(content);
+            } catch (err) {
+                showMessage("加载数据失败：" + err.message, "error");
+                return { games: [], designs: [], materials: [] };
+            }
+        }
+
+        // 保存data.json到GitHub
+        async function saveDataToGitHub(newData) {
+            const config = getConfig();
+            if (!config) return false;
+            
+            try {
+                // 先获取现有文件的SHA（用于更新）
+                let sha = "";
+                const res = await fetch(`https://api.github.com/repos/${config.owner}/${config.repo}/contents/data.json?ref=${config.branch}`, {
+                    headers: getHeaders()
+                });
+                
+                if (res.status === 200) {
+                    const existing = await res.json();
+                    sha = existing.sha;
+                }
+
+                // 上传/更新data.json
+                const content = btoa(JSON.stringify(newData, null, 2)); // 编码为Base64
+                const response = await fetch(`https://api.github.com/repos/${config.owner}/${config.repo}/contents/data.json`, {
+                    method: "PUT",
+                    headers: getHeaders(),
+                    body: JSON.stringify({
+                        message: "Update data.json via admin panel",
+                        content: content,
+                        sha: sha,
+                        branch: config.branch
+                    })
+                });
+
+                if (!response.ok) throw new Error("上传数据失败");
+                return true;
+            } catch (err) {
+                showMessage("保存数据失败：" + err.message, "error");
+                return false;
+            }
+        }
+
+        // 上传文件到GitHub仓库
+        async function uploadFileToGitHub(file, path) {
+            const config = getConfig();
+            if (!config) return null;
+            
+            try {
+                // 读取文件并编码为Base64
+                const reader = new FileReader();
+                return new Promise((resolve, reject) => {
+                    reader.onload = async function(e) {
+                        const content = btoa(e.target.result); // 编码为Base64
+                        
+                        // 上传文件
+                        const response = await fetch(`https://api.github.com/repos/${config.owner}/${config.repo}/contents/${path}`, {
+                            method: "PUT",
+                            headers: getHeaders(),
+                            body: JSON.stringify({
+                                message: `Upload ${file.name}`,
+                                content: content,
+                                branch: config.branch
+                            })
+                        });
+
+                        if (!response.ok) {
+                            reject(new Error("文件上传失败"));
+                            return;
+                        }
+
+                        const data = await response.json();
+                        // 返回文件的访问链接
+                        resolve(`https://raw.githubusercontent.com/${config.owner}/${config.repo}/${config.branch}/${path}`);
+                    };
+                    reader.readAsBinaryString(file);
+                });
+            } catch (err) {
+                showMessage("上传文件失败：" + err.message, "error");
+                return null;
+            }
+        }
+
+        // 保存个人信息
+        async function saveInfo() {
+            const newInfo = {
+                name: document.getElementById("name").value,
+                intro: document.getElementById("intro").value,
+                contact: document.getElementById("contact").value
+            };
+            
+            // 加载现有数据
+            const oldData = await loadData();
+            const newData = { ...oldData, ...newInfo };
+            
+            // 保存到GitHub
+            const success = await saveDataToGitHub(newData);
+            if (success) {
+                showMessage("个人信息保存成功！", "success");
+            }
+        }
+
+        // 上传游戏作品
+        async function uploadGame() {
+            const title = document.getElementById("gameTitle").value;
+            const desc = document.getElementById("gameDesc").value;
+            const file = document.getElementById("gameImg").files[0];
+            
+            if (!title || !file) {
+                showMessage("请填写作品名称并选择封面图！", "error");
+                return;
+            }
+
+            // 上传图片
+            showMessage("正在上传图片...", "success");
+            const imgPath = `assets/games/${Date.now()}-${file.name}`;
+            const imgUrl = await uploadFileToGitHub(file, imgPath);
+            if (!imgUrl) return;
+
+            // 更新数据
+            const oldData = await loadData();
+            if (!oldData.games) oldData.games = [];
+            oldData.games.unshift({ title, desc, imgUrl });
+            
+            // 保存数据
+            const success = await saveDataToGitHub(oldData);
+            if (success) {
+                showMessage("游戏作品上传成功！", "success");
+                // 清空表单
+                document.getElementById("gameTitle").value = "";
+                document.getElementById("gameDesc").value = "";
+                document.getElementById("gameImg").value = "";
+            }
+        }
+
+        // 上传策划案
+        async function uploadDesign() {
+            const title = document.getElementById("designTitle").value;
+            const desc = document.getElementById("designDesc").value;
+            const file = document.getElementById("designFile").files[0];
+            
+            if (!title || !file) {
+                showMessage("请填写策划案标题并选择文件！", "error");
+                return;
+            }
+
+            // 上传文件
+            showMessage("正在上传策划案...", "success");
+            const filePath = `assets/designs/${Date.now()}-${file.name}`;
+            const fileUrl = await uploadFileToGitHub(file, filePath);
+            if (!fileUrl) return;
+
+            // 更新数据
+            const oldData = await loadData();
+            if (!oldData.designs) oldData.designs = [];
+            oldData.designs.unshift({ title, desc, fileUrl });
+            
+            // 保存数据
+            const success = await saveDataToGitHub(oldData);
+            if (success) {
+                showMessage("策划案上传成功！", "success");
+                // 清空表单
+                document.getElementById("designTitle").value = "";
+                document.getElementById("designDesc").value = "";
+                document.getElementById("designFile").value = "";
+            }
+        }
+
+        // 上传图像素材
+        async function uploadMaterials() {
+            const files = document.getElementById("materialFiles").files;
+            if (files.length === 0) {
+                showMessage("请选择要上传的图片！", "error");
+                return;
+            }
+
+            showMessage(`正在上传${files.length}张图片...`, "success");
+            
+            // 批量上传图片
+            const oldData = await loadData();
+            if (!oldData.materials) oldData.materials = [];
+            
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const imgPath = `assets/materials/${Date.now()}-${i}-${file.name}`;
+                const imgUrl = await uploadFileToGitHub(file, imgPath);
+                if (imgUrl) {
+                    oldData.materials.unshift({ url: imgUrl });
+                }
+            }
+
+            // 保存数据
+            const success = await saveDataToGitHub(oldData);
+            if (success) {
+                showMessage("图像素材上传成功！", "success");
+                document.getElementById("materialFiles").value = "";
+            }
+        }
+    </script>
+</body>
+</html>
