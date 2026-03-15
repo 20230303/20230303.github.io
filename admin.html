@@ -8,183 +8,140 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body class="bg-gray-50">
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
-        <div class="bg-white rounded-lg shadow p-6 mb-6">
-            <h1 class="text-2xl font-bold mb-4 text-indigo-600">主页管理后台</h1>
-            
-            <div class="mb-8 p-4 bg-gray-50 rounded-lg">
-                <h2 class="font-bold mb-2">基础配置（必填）</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-1">GitHub 用户名</label>
-                        <input type="text" id="owner" class="w-full border rounded px-3 py-2" placeholder="例如：octocat" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">GitHub 仓库名</label>
-                        <input type="text" id="repo" class="w-full border rounded px-3 py-2" placeholder="例如：octocat.github.io" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">仓库分支</label>
-                        <input type="text" id="branch" class="w-full border rounded px-3 py-2" value="main" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Personal Access Token</label>
-                        <input type="password" id="token" class="w-full border rounded px-3 py-2" placeholder="你的GitHub Token" required>
-                    </div>
-                </div>
-                <button onclick="saveConfig()" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">保存配置</button>
-                <p class="text-xs text-gray-500 mt-2">配置保存在本地，仅用于调用GitHub API</p>
-            </div>
+<div class="max-w-4xl mx-auto px-4 py-8">
+    <div class="bg-white rounded-lg shadow p-6">
+        <h1 class="text-2xl font-bold mb-6 text-indigo-600">主页管理后台</h1>
 
-            <div class="mb-8">
-                <h2 class="font-bold text-lg mb-4">个人信息</h2>
-                <div class="grid grid-cols-1 gap-4 mb-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-1">主页标题/姓名</label>
-                        <input type="text" id="name" class="w-full border rounded px-3 py-2" placeholder="例如：张三的游戏开发主页">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">个人介绍</label>
-                        <textarea id="intro" class="w-full border rounded px-3 py-2" rows="3" placeholder="介绍一下自己"></textarea>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">联系方式</label>
-                        <input type="text" id="contact" class="w-full border rounded px-3 py-2" placeholder="邮箱/微信/GitHub链接等">
-                    </div>
-                </div>
-                <button onclick="saveInfo()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">保存个人信息</button>
+        <div class="mb-8 p-4 bg-gray-50 rounded-lg">
+            <h2 class="font-bold mb-2">GitHub 配置</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div><label class="text-sm">用户名</label><input id="owner" class="w-full border px-3 py-2"></div>
+                <div><label class="text-sm">仓库名</label><input id="repo" class="w-full border px-3 py-2"></div>
+                <div><label class="text-sm">分支</label><input id="branch" class="w-full border px-3 py-2" value="main"></div>
+                <div><label class="text-sm">Token</label><input id="token" type="password" class="w-full border px-3 py-2"></div>
             </div>
-
-            <div class="mb-8">
-                <h2 class="font-bold text-lg mb-4">新增游戏作品</h2>
-                <div class="grid grid-cols-1 gap-4 mb-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-1">作品名称</label>
-                        <input type="text" id="gameTitle" class="w-full border rounded px-3 py-2" placeholder="游戏名称">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">作品描述</label>
-                        <textarea id="gameDesc" class="w-full border rounded px-3 py-2" rows="2" placeholder="游戏简介"></textarea>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">作品封面图</label>
-                        <input type="file" id="gameImg" class="w-full border rounded px-3 py-2" accept="image/*">
-                    </div>
-                </div>
-                <button onclick="uploadGame()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">上传游戏作品</button>
-            </div>
-
-            <div class="mb-8">
-                <h2 class="font-bold text-lg mb-4">新增游戏策划案</h2>
-                <div class="grid grid-cols-1 gap-4 mb-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-1">策划案标题</label>
-                        <input type="text" id="designTitle" class="w-full border rounded px-3 py-2" placeholder="策划案名称">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">策划案描述</label>
-                        <textarea id="designDesc" class="w-full border rounded px-3 py-2" rows="2" placeholder="策划案简介"></textarea>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">策划案文件</label>
-                        <input type="file" id="designFile" class="w-full border rounded px-3 py-2">
-                    </div>
-                </div>
-                <button onclick="uploadDesign()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">上传策划案</button>
-            </div>
-
-            <div class="mb-8">
-                <h2 class="font-bold text-lg mb-4">上传图像素材</h2>
-                <div class="grid grid-cols-1 gap-4 mb-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-1">选择图片（可多选）</label>
-                        <input type="file" id="materialFiles" class="w-full border rounded px-3 py-2" accept="image/*" multiple>
-                    </div>
-                </div>
-                <button onclick="uploadMaterials()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">上传图像素材</button>
-            </div>
-
-            <div id="message" class="mt-6 p-4 rounded hidden"></div>
+            <button onclick="saveConfig()" class="bg-indigo-600 text-white px-4 py-2 rounded">保存配置</button>
         </div>
 
-        <div class="text-center text-sm text-gray-500">
-            <a href="index.html" class="text-indigo-600 hover:underline">返回展示主页</a>
+        <!-- 头像 + 个人信息（已整合） -->
+        <div class="mb-8">
+            <h2 class="font-bold text-lg mb-4">个人信息 & 头像</h2>
+            <div class="grid gap-4 mb-4">
+                <div>
+                    <label class="block text-sm mb-1">主页标题 / 姓名</label>
+                    <input id="name" class="w-full border px-3 py-2">
+                </div>
+                <div>
+                    <label class="block text-sm mb-1">个人介绍</label>
+                    <textarea id="intro" rows="3" class="w-full border px-3 py-2"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm mb-1">联系方式</label>
+                    <input id="contact" class="w-full border px-3 py-2">
+                </div>
+                <!-- 头像上传 -->
+                <div>
+                    <label class="block text-sm mb-1">上传头像（替换首页头像）</label>
+                    <input type="file" id="avatarFile" accept="image/*" class="w-full border px-3 py-2">
+                </div>
+            </div>
+            <button onclick="saveInfoAndAvatar()" class="bg-green-600 text-white px-4 py-2 rounded">保存信息 + 头像</button>
         </div>
+
+        <div class="mb-8">
+            <h2 class="font-bold text-lg mb-4">新增游戏作品</h2>
+            <div class="grid gap-4 mb-4">
+                <input id="gameTitle" placeholder="作品名" class="border px-3 py-2">
+                <textarea id="gameDesc" rows="2" placeholder="描述" class="border px-3 py-2"></textarea>
+                <input type="file" id="gameImg" accept="image/*" class="border px-3 py-2">
+            </div>
+            <button onclick="uploadGame()" class="bg-green-600 text-white px-4 py-2 rounded">上传作品</button>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="font-bold text-lg mb-4">新增策划案</h2>
+            <div class="grid gap-4 mb-4">
+                <input id="designTitle" placeholder="标题" class="border px-3 py-2">
+                <textarea id="designDesc" rows="2" placeholder="描述" class="border px-3 py-2"></textarea>
+                <input type="file" id="designFile" class="border px-3 py-2">
+            </div>
+            <button onclick="uploadDesign()" class="bg-green-600 text-white px-4 py-2 rounded">上传策划案</button>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="font-bold text-lg mb-4">上传图像素材</h2>
+            <input type="file" id="materialFiles" accept="image/*" multiple class="border px-3 py-2 mb-4">
+            <button onclick="uploadMaterials()" class="bg-green-600 text-white px-4 py-2 rounded">上传素材</button>
+        </div>
+
+        <div id="message" class="p-4 rounded hidden mt-4"></div>
     </div>
+
+    <div class="text-center text-sm text-gray-500 mt-4">
+        <a href="index.html" class="text-indigo-600 hover:underline">返回主页</a>
+    </div>
+</div>
 
 <script>
 function saveConfig() {
-    const config = {
+    const c = {
         owner: document.getElementById("owner").value,
         repo: document.getElementById("repo").value,
         branch: document.getElementById("branch").value,
         token: document.getElementById("token").value
     };
-    localStorage.setItem("githubConfig", JSON.stringify(config));
-    showMessage("配置保存成功！", "success");
+    localStorage.setItem("githubConfig", JSON.stringify(c));
+    showMessage("配置保存成功", "success");
 }
 
-window.onload = function () {
-    const config = JSON.parse(localStorage.getItem("githubConfig")) || {};
-    if (config.owner) document.getElementById("owner").value = config.owner;
-    if (config.repo) document.getElementById("repo").value = config.repo;
-    if (config.branch) document.getElementById("branch").value = config.branch;
-    if (config.token) document.getElementById("token").value = config.token;
-
-    loadData().then(data => {
-        document.getElementById("name").value = data.name || "";
-        document.getElementById("intro").value = data.intro || "";
-        document.getElementById("contact").value = data.contact || "";
-    });
+window.onload = async () => {
+    const c = JSON.parse(localStorage.getItem("githubConfig")) || {};
+    document.getElementById("owner").value = c.owner || "";
+    document.getElementById("repo").value = c.repo || "";
+    document.getElementById("branch").value = c.branch || "main";
+    document.getElementById("token").value = c.token || "";
+    const d = await loadData();
+    document.getElementById("name").value = d.name || "";
+    document.getElementById("intro").value = d.intro || "";
+    document.getElementById("contact").value = d.contact || "";
 };
 
 function showMessage(text, type) {
-    const msg = document.getElementById("message");
-    msg.textContent = text;
-    msg.className = `mt-6 p-4 rounded ${type === "success" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`;
-    setTimeout(() => { msg.classList.add("hidden"); }, 3000);
+    const m = document.getElementById("message");
+    m.textContent = text;
+    m.className = `p-4 rounded ${type==="success"?"bg-green-100 text-green-800":"bg-red-100 text-red-800"}`;
+    setTimeout(()=>m.classList.add("hidden"), 3000);
 }
 
 function getHeaders() {
     const c = JSON.parse(localStorage.getItem("githubConfig"));
-    if (!c?.token) { showMessage("请先填写配置！", "error"); return null; }
+    if (!c?.token) { showMessage("请先配置", "error"); return null; }
     return {
         "Authorization": `token ${c.token}`,
-        "Accept": "application/vnd.github.v3+json",
         "Content-Type": "application/json"
     };
 }
 
 function getConfig() {
     const c = JSON.parse(localStorage.getItem("githubConfig"));
-    if (!c?.owner || !c?.repo || !c?.branch) { showMessage("请先填写配置！", "error"); return null; }
+    if (!c?.owner || !c?.repo) { showMessage("请先配置", "error"); return null; }
     return c;
 }
 
-// ========== 核心修复：中文不乱码的 Base64 ==========
-function utf8ToB64(str) {
-    return btoa(unescape(encodeURIComponent(str)));
-}
-function b64ToUtf8(b64) {
-    try {
-        return decodeURIComponent(escape(atob(b64)));
-    } catch (e) {
-        return atob(b64);
-    }
-}
-// =================================================
+// 中文不乱码核心
+function utf8ToB64(s) { return btoa(unescape(encodeURIComponent(s))); }
+function b64ToUtf8(b) { try { return decodeURIComponent(escape(atob(b))); } catch { return atob(b); } }
 
 async function loadData() {
     const c = getConfig();
-    if (!c) return { name: "", intro: "", contact: "", games: [], designs: [], materials: [] };
+    if (!c) return { name:"", intro:"", contact:"", avatarUrl:"", games:[], designs:[], materials:[] };
     try {
-        const res = await fetch(`https://api.github.com/repos/${c.owner}/${c.repo}/contents/data.json?ref=${c.branch}`, { headers: getHeaders() });
-        if (res.status === 404) return { name: "", intro: "", contact: "", games: [], designs: [], materials: [] };
-        const data = await res.json();
-        const content = b64ToUtf8(data.content.replace(/\s/g, ''));
-        return JSON.parse(content);
-    } catch (err) {
-        return { name: "", intro: "", contact: "", games: [], designs: [], materials: [] };
+        const r = await fetch(`https://api.github.com/repos/${c.owner}/${c.repo}/contents/data.json?ref=${c.branch}`, {headers:getHeaders()});
+        if (r.status===404) return { name:"", intro:"", contact:"", avatarUrl:"", games:[], designs:[], materials:[] };
+        const d = await r.json();
+        return JSON.parse(b64ToUtf8(d.content.replace(/\s/g,'')));
+    } catch {
+        return { name:"", intro:"", contact:"", avatarUrl:"", games:[], designs:[], materials:[] };
     }
 }
 
@@ -193,126 +150,91 @@ async function saveDataToGitHub(newData) {
     if (!c) return false;
     try {
         let sha = "";
-        const res = await fetch(`https://api.github.com/repos/${c.owner}/${c.repo}/contents/data.json?ref=${c.branch}`, { headers: getHeaders() });
-        if (res.status === 200) {
-            const ex = await res.json();
-            sha = ex.sha;
-        }
+        const r = await fetch(`https://api.github.com/repos/${c.owner}/${c.repo}/contents/data.json?ref=${c.branch}`, {headers:getHeaders()});
+        if (r.ok) sha = (await r.json()).sha;
         const content = utf8ToB64(JSON.stringify(newData, null, 2));
         const resp = await fetch(`https://api.github.com/repos/${c.owner}/${c.repo}/contents/data.json`, {
-            method: "PUT",
-            headers: getHeaders(),
-            body: JSON.stringify({
-                message: "Update from admin",
-                content: content,
-                sha: sha,
-                branch: c.branch
-            })
+            method:"PUT", headers:getHeaders(),
+            body:JSON.stringify({ message:"Update", content, sha, branch:c.branch })
         });
-        if (!resp.ok) throw new Error("保存失败");
-        return true;
-    } catch (err) {
-        showMessage("保存失败：" + err.message, "error");
-        return false;
-    }
+        return resp.ok;
+    } catch { showMessage("保存失败", "error"); return false; }
 }
 
-async function uploadFileToGitHub(file, path) {
+async function uploadFile(file, path) {
     const c = getConfig();
-    if (!c) return null;
-    return new Promise((resolve, reject) => {
+    if (!c || !file) return null;
+    return new Promise(resolve => {
         const r = new FileReader();
         r.onload = async () => {
-            try {
-                const content = btoa(r.result);
-                const resp = await fetch(`https://api.github.com/repos/${c.owner}/${c.repo}/contents/${path}`, {
-                    method: "PUT",
-                    headers: getHeaders(),
-                    body: JSON.stringify({
-                        message: "Upload " + file.name,
-                        content: content,
-                        branch: c.branch
-                    })
-                });
-                if (!resp.ok) throw new Error("上传失败");
-                resolve(`https://raw.githubusercontent.com/${c.owner}/${c.repo}/${c.branch}/${path}`);
-            } catch (e) { reject(e); }
+            const content = btoa(r.result);
+            const resp = await fetch(`https://api.github.com/repos/${c.owner}/${c.repo}/contents/${path}`, {
+                method:"PUT", headers:getHeaders(),
+                body:JSON.stringify({ message:"Upload", content, branch:c.branch })
+            });
+            if (resp.ok) resolve(`https://raw.githubusercontent.com/${c.owner}/${c.repo}/${c.branch}/${path}`);
+            else resolve(null);
         };
-        r.onerror = () => reject(new Error("读取文件失败"));
         r.readAsBinaryString(file);
     });
 }
 
-// 保存个人信息
-async function saveInfo() {
+// ========== 头像 + 信息保存 ==========
+async function saveInfoAndAvatar() {
     const name = document.getElementById("name").value.trim();
     const intro = document.getElementById("intro").value.trim();
     const contact = document.getElementById("contact").value.trim();
+    const avatarFile = document.getElementById("avatarFile").files[0];
+    
     const old = await loadData();
-    const ok = await saveDataToGitHub({ ...old, name, intro, contact });
-    if (ok) showMessage("保存成功！", "success");
+    let avatarUrl = old.avatarUrl;
+
+    if (avatarFile) {
+        showMessage("头像上传中...", "success");
+        const fn = `avatar_${Date.now()}.jpg`;
+        avatarUrl = await uploadFile(avatarFile, `assets/avatar/${fn}`);
+    }
+
+    const ok = await saveDataToGitHub({ ...old, name, intro, contact, avatarUrl });
+    if (ok) showMessage("信息 + 头像保存成功", "success");
 }
 
 // 上传游戏
 async function uploadGame() {
-    const title = document.getElementById("gameTitle").value.trim();
-    const desc = document.getElementById("gameDesc").value.trim();
-    const file = document.getElementById("gameImg").files[0];
-    if (!title || !file) { showMessage("请填完整", "error"); return; }
-    showMessage("上传中...", "success");
-    const fn = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9_\.]/g, "_")}`;
-    const url = await uploadFileToGitHub(file, `assets/games/${fn}`);
+    const t = document.getElementById("gameTitle").value.trim();
+    const d = document.getElementById("gameDesc").value.trim();
+    const f = document.getElementById("gameImg").files[0];
+    if (!t || !f) { showMessage("请填完整", "error"); return; }
+    const url = await uploadFile(f, `assets/games/${Date.now()}_${f.name}`);
     if (!url) return;
     const old = await loadData();
-    old.games = [{ title, desc, imgUrl: url }, ...(old.games || [])];
-    const ok = await saveDataToGitHub(old);
-    if (ok) {
-        showMessage("上传成功", "success");
-        document.getElementById("gameTitle").value = "";
-        document.getElementById("gameDesc").value = "";
-        document.getElementById("gameImg").value = "";
-    }
+    old.games.unshift({ title:t, desc:d, imgUrl:url });
+    if (await saveDataToGitHub(old)) showMessage("上传成功", "success");
 }
 
 // 上传策划
 async function uploadDesign() {
-    const title = document.getElementById("designTitle").value.trim();
-    const desc = document.getElementById("designDesc").value.trim();
-    const file = document.getElementById("designFile").files[0];
-    if (!title || !file) { showMessage("请填完整", "error"); return; }
-    showMessage("上传中...", "success");
-    const fn = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9_\.]/g, "_")}`;
-    const url = await uploadFileToGitHub(file, `assets/designs/${fn}`);
+    const t = document.getElementById("designTitle").value.trim();
+    const d = document.getElementById("designDesc").value.trim();
+    const f = document.getElementById("designFile").files[0];
+    if (!t || !f) { showMessage("请填完整", "error"); return; }
+    const url = await uploadFile(f, `assets/designs/${Date.now()}_${f.name}`);
     if (!url) return;
     const old = await loadData();
-    old.designs = [{ title, desc, fileUrl: url }, ...(old.designs || [])];
-    const ok = await saveDataToGitHub(old);
-    if (ok) {
-        showMessage("上传成功", "success");
-        document.getElementById("designTitle").value = "";
-        document.getElementById("designDesc").value = "";
-        document.getElementById("designFile").value = "";
-    }
+    old.designs.unshift({ title:t, desc:d, fileUrl:url });
+    if (await saveDataToGitHub(old)) showMessage("上传成功", "success");
 }
 
 // 上传素材
 async function uploadMaterials() {
-    const files = document.getElementById("materialFiles").files;
-    if (files.length === 0) { showMessage("请选图片", "error"); return; }
-    showMessage("批量上传中...", "success");
+    const fs = document.getElementById("materialFiles").files;
+    if (!fs.length) { showMessage("请选图片", "error"); return; }
     const old = await loadData();
-    let count = 0;
-    for (let i = 0; i < files.length; i++) {
-        const f = files[i];
-        const fn = `${Date.now()}-${i}-${f.name.replace(/[^a-zA-Z0-9_\.]/g, "_")}`;
-        const url = await uploadFileToGitHub(f, `assets/materials/${fn}`);
-        if (url) {
-            old.materials = [{ url }, ...(old.materials || [])];
-            count++;
-        }
+    for (const f of fs) {
+        const url = await uploadFile(f, `assets/materials/${Date.now()}_${f.name}`);
+        if (url) old.materials.unshift({ url });
     }
-    const ok = await saveDataToGitHub(old);
-    if (ok) showMessage(`成功上传 ${count} 张`, "success");
+    if (await saveDataToGitHub(old)) showMessage("上传成功", "success");
 }
 </script>
 </body>
