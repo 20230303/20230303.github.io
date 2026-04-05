@@ -2,7 +2,13 @@
   "name": "平行弧线/桃",
   "intro": "◩山西大学\n◪我是一名热爱游戏开发的独立创作者，致力于打造有趣、有温度的游戏作品\n◩LOL骨灰级玩家、牌佬、古法编程爱好者...",
   "contact": "kang7520@foxmial.com",
-  "games": [],
+  "games": [
+    {
+      "title": "LOL装备",
+      "desc": "杀戮尖塔mod，添加了40余件LOL装备作为遗物加入游戏。太懒了，无限期停止更新。已有事件与人物架构、预计下次更新为杀戮尖塔Ⅱmod",
+      "imgUrl": "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/games/1775429384564_image.jpg"
+    }
+  ],
   "designs": [
     {
       "title": "《序列回响》游戏策划案",
