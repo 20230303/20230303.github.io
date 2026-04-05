@@ -5,6 +5,11 @@
   "games": [],
   "designs": [
     {
+      "title": "《序列回响》游戏策划案",
+      "desc": "肉鸽打牌游戏，融合自走棋+爬塔玩法",
+      "fileUrl": "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/designs/1775428572739_《序列回响》游戏策划案 - 核心战斗与 PVE 肉鸽系统.docx"
+    },
+    {
       "title": "Noita施法机制分析",
       "desc": "简单研究，关注投射与多重释放",
       "fileUrl": "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/designs/1773586988426-Noita________V2.0.pdf"
