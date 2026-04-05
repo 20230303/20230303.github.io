@@ -11,6 +11,11 @@
   ],
   "designs": [
     {
+      "title": "测试题附游戏经历",
+      "desc": "不知名策划测试题目，累惨我了",
+      "fileUrl": "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/designs/1775430039643_游戏策划测试题附游戏经历.docx"
+    },
+    {
       "title": "《序列回响》游戏策划案",
       "desc": "肉鸽打牌游戏，融合自走棋+爬塔玩法",
       "fileUrl": "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/designs/1775428572739_《序列回响》游戏策划案 - 核心战斗与 PVE 肉鸽系统.docx"
