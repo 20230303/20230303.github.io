@@ -1,34 +1,116 @@
 {
   "name": "平行弧线/桃",
   "intro": "◩山西大学\n◪我是一名热爱游戏开发的独立创作者，致力于打造有趣、有温度的游戏作品\n◩LOL骨灰级玩家、牌佬、古法编程爱好者...",
-  "contact": "kang7520@foxmial.com",
+  "contact": "kang7520@foxmail.com",
+  "avatarUrl": "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/avatar/avatar_1773590439310.jpg",
   "games": [
     {
       "title": "诸神国度",
-      "desc": "奇迹mu类，垃圾氪金手游，玩法商业化拉完了。战斗数值可圈可点",
-      "imgUrl": "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/games/1775431385775_微信图片_2026-04-06_071238_505.jpg"
+      "subtitle": "奇迹 MU 类魔幻手游",
+      "desc": "一款经典奇迹 MU 题材的 ARPG 手游，主打爽快战斗与深度养成系统。",
+      "imgUrl": "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/games/1775431385775_微信图片_2026-04-06_071238_505.jpg",
+      "images": [
+        "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/games/1775431385775_微信图片_2026-04-06_071238_505.jpg"
+      ],
+      "tags": ["Unity", "ARPG", "手游", "数值策划"],
+      "role": "战斗数值策划",
+      "status": "已上线",
+      "detail": {
+        "overview": "《诸神国度》是一款基于经典奇迹 MU IP 打造的魔幻题材 ARPG 手游。游戏延续了奇迹系列的经典玩法，包括战士、法师、弓箭手三大职业，以及卓越装备、翅膀系统、血色城堡、恶魔广场等经典内容。",
+        "features": [
+          "经典三职业体系，每个职业拥有独特的技能树与成长路线",
+          "卓越装备系统，支持多属性随机组合与套装效果",
+          "翅膀进阶系统，从初级翅膀到终极神翼的完整成长线",
+          "血色城堡、恶魔广场等经典副本玩法的移动端还原",
+          "跨服盟战系统，支持千人同屏的大型 PVP 战斗"
+        ],
+        "responsibilities": [
+          "负责战斗数值体系的设计与平衡，包括职业技能、属性成长曲线",
+          "参与装备系统数值规划，制定卓越属性的掉落概率与价值体系",
+          "搭建怪物数值模型，设计不同难度副本的怪物属性配置",
+          "跟进测试反馈，持续调整职业平衡与游戏经济系统"
+        ]
+      }
     },
     {
-      "title": "LOL装备",
-      "desc": "杀戮尖塔mod，添加了40余件LOL装备作为遗物加入游戏。太懒了，无限期停止更新。已有事件与人物架构、预计下次更新为杀戮尖塔Ⅱmod",
-      "imgUrl": "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/games/1775429384564_image.jpg"
+      "title": "LOL 装备 Mod",
+      "subtitle": "《杀戮尖塔》同人 Mod",
+      "desc": "为《杀戮尖塔》制作的英雄联盟主题 Mod，新增 40 余件 LOL 装备与相关机制。",
+      "imgUrl": "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/games/1775429384564_image.jpg",
+      "images": [
+        "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/games/1775429384564_image.jpg"
+      ],
+      "tags": ["Mod开发", "杀戮尖塔", "卡牌游戏", "独立制作"],
+      "role": "独立开发者",
+      "status": "暂停更新",
+      "detail": {
+        "overview": "这是一款为 Roguelike 卡牌游戏《杀戮尖塔》制作的英雄联盟主题 Mod。项目将英雄联盟中的经典装备、道具机制融入到杀戮尖塔的卡牌战斗体系中，为玩家带来全新的构筑体验。",
+        "features": [
+          "新增 40 余件英雄联盟经典装备，每件装备都有独特的被动效果",
+          "引入装备合成系统，玩家可通过收集散件合成强力神装",
+          "设计专属遗物与事件，丰富游戏流程的随机性与策略性",
+          "平衡适配四个职业的装备池，确保每个职业都有多种构筑路线",
+          "完整的中文本地化支持，装备描述贴合 LOL 玩家的认知习惯"
+        ],
+        "responsibilities": [
+          "独立完成 Mod 的整体设计与代码实现",
+          "设计装备效果与数值平衡，确保与原版游戏的兼容性",
+          "制作装备图标与相关美术资源",
+          "收集社区反馈，持续迭代优化版本"
+        ]
+      }
     }
   ],
   "designs": [
     {
-      "title": "测试题附游戏经历",
-      "desc": "不知名策划测试题目，累惨我了",
-      "fileUrl": "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/designs/1775430039643_游戏策划测试题附游戏经历.docx"
-    },
-    {
       "title": "《序列回响》游戏策划案",
-      "desc": "肉鸽打牌游戏，融合自走棋+爬塔玩法",
-      "fileUrl": "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/designs/1775428572739_《序列回响》游戏策划案 - 核心战斗与 PVE 肉鸽系统.docx"
+      "subtitle": "肉鸽卡牌 + 自走棋 玩法融合设计",
+      "desc": "一款融合自走棋布阵机制与爬塔卡牌构筑的 Roguelike 游戏设计方案。",
+      "icon": "fa-chess-board",
+      "iconColor": "primary",
+      "tags": ["系统设计", "数值策划", "Roguelike", "卡牌游戏"],
+      "fileUrl": "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/designs/1775428572739_《序列回响》游戏策划案 - 核心战斗与 PVE 肉鸽系统.docx",
+      "images": [],
+      "detail": {
+        "overview": "《序列回响》是一款创新性的 Roguelike 卡牌游戏，将自走棋的站位布阵机制与传统爬塔卡牌的构筑玩法深度融合。玩家需要在战斗前合理排布角色位置，在战斗过程中通过打出卡牌释放技能，形成独特的策略体验。",
+        "coreDesign": [
+          "战斗前布阵阶段：玩家可在 3x3 的格子中自由布置角色位置，不同位置影响攻击优先级与技能范围",
+          "卡牌驱动战斗：战斗中通过抽取手牌释放技能，卡牌费用、效果与角色属性相互关联",
+          "遗物系统：收集各类遗物，提供被动增益效果，丰富构筑多样性",
+          "敌人序列机制：敌人按固定序列依次出场，玩家需要预判并调整策略应对",
+          "多职业分支：每个角色有独特的职业树，支持多种 Build 路线"
+        ],
+        "designHighlights": [
+          "创新性地将自走棋空间策略与卡牌即时决策相结合，形成双重策略维度",
+          "通过序列机制控制战斗节奏，避免传统自走棋的随机性过强问题",
+          "设计了完整的数值成长曲线，确保每局游戏都有明确的成长感"
+        ]
+      }
     },
     {
-      "title": "Noita施法机制分析",
-      "desc": "简单研究，关注投射与多重释放",
-      "fileUrl": "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/designs/1773586988426-Noita________V2.0.pdf"
+      "title": "Noita 施法机制分析",
+      "subtitle": "投射物与多重释放系统深度拆解",
+      "desc": "对 Noita 独特的魔杖施法系统进行系统性分析，探究其底层机制与设计逻辑。",
+      "icon": "fa-magic",
+      "iconColor": "secondary",
+      "tags": ["机制分析", "系统拆解", "法术系统"],
+      "fileUrl": "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/designs/1773586988426-Noita________V2.0.pdf",
+      "images": [],
+      "detail": {
+        "overview": "Noita 是一款以「每个像素都有物理模拟」为核心卖点的 Roguelike 游戏，其施法系统是游戏的核心乐趣来源。本分析从投射物系统、多重释放机制、法术修饰词等多个维度，深度拆解这套极具创造力的法术系统。",
+        "coreAnalysis": [
+          "投射物基础机制：速度、伤害、生命周期、碰撞检测等核心属性解析",
+          "多重释放（Multicast）原理：同一施法触发多个法术的执行顺序与叠加规则",
+          "修饰词系统：各类修饰词如何改变法术行为，以及它们之间的组合逻辑",
+          "魔杖槽位机制：始终施放、施放次数、充能时间等槽位属性的运作方式",
+          "法术触发器：触发器类法术如何实现链式施法，形成复杂法术组合"
+        ],
+        "researchConclusions": [
+          "Noita 的法术系统本质是一套可视化的编程语言，玩家通过组合法术实现各种效果",
+          "多重释放机制是系统深度的关键，它让简单的法术组合产生指数级的可能性",
+          "物理模拟与法术系统的深度结合，是 Noita 独特体验的核心来源"
+        ]
+      }
     }
   ],
   "materials": [
@@ -66,5 +148,6 @@
       "url": "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/materials/1773588842400-0-____.png"
     }
   ],
-  "avatarUrl": "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/avatar/avatar_1773590439310.jpg"
+  "backgrounds": [],
+  "quotes": []
 }

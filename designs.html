@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设计拆解 - 个人主页</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#10b981',
+                        dark: '#1f2937',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto { content-visibility: auto; }
+        }
+        html { scroll-behavior: smooth; }
+        
+        /* 内容上浮动画 */
+        .fade-up {
+            animation: fadeUp 0.6s ease-out;
+        }
+        @keyframes fadeUp {
+            from { 
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 展开动画 */
+        .design-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .design-detail.expanded {
+            max-height: 3000px;
+            transition: max-height 0.8s ease-in;
+        }
+        
+        /* 旋转箭头 */
+        .expand-arrow {
+            transition: transform 0.3s ease;
+        }
+        .expanded .expand-arrow {
+            transform: rotate(180deg);
+        }
+        
+        /* 图片轮播 */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .carousel-slide {
+            min-width: 100%;
+            height: 280px;
+            object-fit: cover;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+        .carousel-btn:hover {
+            background: rgba(0,0,0,0.7);
+        }
+        .carousel-btn.prev { left: 10px; }
+        .carousel-btn.next { right: 10px; }
+        .carousel-dots {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+        }
+        .carousel-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .carousel-dot.active {
+            background: white;
+        }
+        
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+
+<!-- 顶部导航 -->
+<nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+    <div class="container mx-auto px-4 md:px-8 py-4">
+        <div class="flex justify-center items-center space-x-4">
+            <a href="index.html" class="text-gray-600 hover:text-primary transition-colors">首页</a>
+            <span class="text-gray-300">|</span>
+            <a href="games.html" class="text-gray-600 hover:text-primary transition-colors">游戏作品</a>
+            <span class="text-gray-300">|</span>
+            <a href="designs.html" class="text-primary font-medium">设计拆解</a>
+            <span class="text-gray-300">|</span>
+            <a href="materials.html" class="text-gray-600 hover:text-primary transition-colors">图像素材</a>
+        </div>
+    </div>
+</nav>
+
+<!-- 页面标题区（缩小版） -->
+<header class="bg-white border-b border-gray-100 py-8">
+    <div class="container mx-auto px-4 md:px-8 fade-up">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex items-center">
+                <div class="bg-primary/10 text-primary p-3 rounded-xl mr-4">
+                    <i class="fas fa-file-alt text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">设计拆解</h1>
+                    <p class="text-gray-500 text-sm">游戏策划案与系统分析文档，记录对游戏设计的思考与探索</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- 策划案列表 -->
+<main class="flex-1 py-10">
+    <div class="container mx-auto px-4 md:px-8">
+        <div id="designList" class="max-w-4xl mx-auto space-y-4">
+            <div class="flex justify-center items-center py-12 text-gray-500">
+                <i class="fas fa-spinner fa-spin mr-2"></i> 加载中...
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- 页脚 -->
+<footer class="bg-dark text-white py-12">
+    <div class="container mx-auto px-4 md:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0">
+                <h3 class="text-2xl font-bold mb-2" id="footerTitle">个人主页</h3>
+                <p class="text-gray-400" id="footerCopyright">© 2026 保留所有权利</p>
+            </div>
+            <div class="flex space-x-6">
+                <a href="https://github.com/20230303" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fab fa-github text-xl"></i>
+                </a>
+                <a href="https://space.bilibili.com/496677580?spm_id_from=333.1007.0.0" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fab fa-bilibili text-xl"></i>
+                </a>
+                <a href="mailto:kang7520@foxmail.com" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fas fa-envelope text-xl"></i>
+                </a>
+                <a href="admin.html" class="text-gray-400 hover:text-white transition-colors" title="管理后台">
+                    <i class="fas fa-cog text-xl"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const CONFIG = {
+        owner: "20230303",
+        repo: "20230303.github.io",
+        branch: "main"
+    };
+
+    // 默认设计拆解数据
+    const DEFAULT_DESIGNS = [
+        {
+            title: "《序列回响》游戏策划案",
+            subtitle: "肉鸽卡牌 + 自走棋 玩法融合设计",
+            desc: "一款融合自走棋布阵机制与爬塔卡牌构筑的 Roguelike 游戏设计方案。",
+            icon: "fa-chess-board",
+            iconColor: "primary",
+            tags: ["系统设计", "数值策划", "Roguelike", "卡牌游戏"],
+            fileUrl: "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/designs/1775428572739_《序列回响》游戏策划案 - 核心战斗与 PVE 肉鸽系统.docx",
+            images: [],
+            detail: {
+                overview: "《序列回响》是一款创新性的 Roguelike 卡牌游戏，将自走棋的站位布阵机制与传统爬塔卡牌的构筑玩法深度融合。玩家需要在战斗前合理排布角色位置，在战斗过程中通过打出卡牌释放技能，形成独特的策略体验。",
+                coreDesign: [
+                    "战斗前布阵阶段：玩家可在 3x3 的格子中自由布置角色位置，不同位置影响攻击优先级与技能范围",
+                    "卡牌驱动战斗：战斗中通过抽取手牌释放技能，卡牌费用、效果与角色属性相互关联",
+                    "遗物系统：收集各类遗物，提供被动增益效果，丰富构筑多样性",
+                    "敌人序列机制：敌人按固定序列依次出场，玩家需要预判并调整策略应对",
+                    "多职业分支：每个角色有独特的职业树，支持多种 Build 路线"
+                ],
+                designHighlights: [
+                    "创新性地将自走棋空间策略与卡牌即时决策相结合，形成双重策略维度",
+                    "通过序列机制控制战斗节奏，避免传统自走棋的随机性过强问题",
+                    "设计了完整的数值成长曲线，确保每局游戏都有明确的成长感"
+                ]
+            }
+        },
+        {
+            title: "Noita 施法机制分析",
+            subtitle: "投射物与多重释放系统深度拆解",
+            desc: "对 Noita 独特的魔杖施法系统进行系统性分析，探究其底层机制与设计逻辑。",
+            icon: "fa-magic",
+            iconColor: "secondary",
+            tags: ["机制分析", "系统拆解", "法术系统"],
+            fileUrl: "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/designs/1773586988426-Noita________V2.0.pdf",
+            images: [],
+            detail: {
+                overview: "Noita 是一款以「每个像素都有物理模拟」为核心卖点的 Roguelike 游戏，其施法系统是游戏的核心乐趣来源。本分析从投射物系统、多重释放机制、法术修饰词等多个维度，深度拆解这套极具创造力的法术系统。",
+                coreAnalysis: [
+                    "投射物基础机制：速度、伤害、生命周期、碰撞检测等核心属性解析",
+                    "多重释放（Multicast）原理：同一施法触发多个法术的执行顺序与叠加规则",
+                    "修饰词系统：各类修饰词如何改变法术行为，以及它们之间的组合逻辑",
+                    "魔杖槽位机制：始终施放、施放次数、充能时间等槽位属性的运作方式",
+                    "法术触发器：触发器类法术如何实现链式施法，形成复杂法术组合"
+                ],
+                researchConclusions: [
+                    "Noita 的法术系统本质是一套可视化的编程语言，玩家通过组合法术实现各种效果",
+                    "多重释放机制是系统深度的关键，它让简单的法术组合产生指数级的可能性",
+                    "物理模拟与法术系统的深度结合，是 Noita 独特体验的核心来源"
+                ]
+            }
+        }
+    ];
+
+    let currentDesigns = DEFAULT_DESIGNS;
+
+    // 图片轮播功能
+    function initCarousel(cardId, images) {
+        const container = document.getElementById(`carousel-${cardId}`);
+        if (!container || images.length <= 1) return;
+
+        const track = container.querySelector('.carousel-track');
+        const dotsContainer = container.querySelector('.carousel-dots');
+        let currentIndex = 0;
+
+        // 创建图片
+        track.innerHTML = images.map(img => 
+            `<img src="${img}" class="carousel-slide" onerror="this.src='https://picsum.photos/800/400?text=Design'">`
+        ).join('');
+
+        // 创建指示点
+        dotsContainer.innerHTML = images.map((_, i) => 
+            `<span class="carousel-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></span>`
+        ).join('');
+
+        // 切换图片
+        function goToSlide(index) {
+            currentIndex = (index + images.length) % images.length;
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            dotsContainer.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
+            });
+        }
+
+        // 按钮事件
+        container.querySelector('.prev').addEventListener('click', (e) => {
+            e.stopPropagation();
+            goToSlide(currentIndex - 1);
+        });
+        container.querySelector('.next').addEventListener('click', (e) => {
+            e.stopPropagation();
+            goToSlide(currentIndex + 1);
+        });
+
+        // 指示点事件
+        dotsContainer.querySelectorAll('.carousel-dot').forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                e.stopPropagation();
+                goToSlide(parseInt(e.target.dataset.index));
+            });
+        });
+    }
+
+    // 切换展开/收起
+    function toggleDetail(cardId) {
+        const detail = document.getElementById(`detail-${cardId}`);
+        const card = document.getElementById(`card-${cardId}`);
+        const isExpanded = detail.classList.contains('expanded');
+
+        if (isExpanded) {
+            detail.classList.remove('expanded');
+            card.classList.remove('expanded');
+        } else {
+            detail.classList.add('expanded');
+            card.classList.add('expanded');
+        }
+    }
+
+    // 渲染设计拆解列表
+    function renderDesigns(data) {
+        // 处理设计数据（过滤掉测试题相关内容）
+        if (data.designs && data.designs.length > 0) {
+            const filtered = data.designs.filter(d => 
+                !d.title.includes('测试题') && !d.title.includes('游戏经历')
+            );
+            currentDesigns = filtered.map((d, i) => ({
+                ...DEFAULT_DESIGNS[i % DEFAULT_DESIGNS.length],
+                ...d
+            }));
+        } else {
+            currentDesigns = DEFAULT_DESIGNS;
+        }
+
+        document.title = `设计拆解 - ${data.name || '个人主页'}`;
+        document.getElementById("footerTitle").innerText = data.name || '个人主页';
+        document.getElementById("footerCopyright").innerText = `© 2026 ${data.name || ''}. 保留所有权利`;
+
+        // 渲染列表
+        const designList = document.getElementById("designList");
+        if (currentDesigns.length) {
+            designList.innerHTML = "";
+            currentDesigns.forEach((d, index) => {
+                const item = document.createElement("div");
+                item.id = `card-${index}`;
+                item.className = "bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden fade-up hover:shadow-md transition-shadow";
+                item.style.animationDelay = `${index * 0.1}s`;
+                item.style.animationFillMode = "both";
+                
+                const images = d.images || [];
+                const iconColorClass = d.iconColor === 'secondary' ? 'secondary' : 'primary';
+                
+                item.innerHTML = `
+                    <!-- 列表项头部 -->
+                    <div class="p-5 cursor-pointer" onclick="toggleDetail(${index})">
+                        <div class="flex items-center">
+                            <!-- 图标 -->
+                            <div class="bg-${iconColorClass}/10 text-${iconColorClass} p-3 rounded-xl mr-4 flex-shrink-0">
+                                <i class="fas ${d.icon || 'fa-file-alt'} text-xl"></i>
+                            </div>
+                            
+                            <!-- 标题和描述 -->
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <h3 class="text-lg font-semibold text-gray-800 truncate">${d.title}</h3>
+                                </div>
+                                <p class="text-gray-500 text-sm">${d.subtitle || d.desc || ''}</p>
+                                <div class="flex flex-wrap gap-1.5 mt-2">
+                                    ${(d.tags || []).map(tag => 
+                                        `<span class="bg-gray-100 text-gray-500 text-xs px-2 py-0.5 rounded">${tag}</span>`
+                                    ).join('')}
+                                </div>
+                            </div>
+                            
+                            <!-- 操作按钮 -->
+                            <div class="flex items-center gap-3 ml-4 flex-shrink-0">
+                                <a href="${d.fileUrl || '#'}" target="_blank" 
+                                   class="text-gray-400 hover:text-primary transition-colors p-2"
+                                   onclick="event.stopPropagation()"
+                                   title="下载文档">
+                                    <i class="fas fa-download"></i>
+                                </a>
+                                <i class="fas fa-chevron-down expand-arrow text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 展开详情 -->
+                    <div id="detail-${index}" class="design-detail">
+                        <div class="px-5 pb-5 border-t border-gray-50">
+                            <div class="pt-4">
+                                <!-- 图片轮播（如果有图片） -->
+                                ${images.length > 0 ? `
+                                    <div id="carousel-${index}" class="carousel-container mb-5">
+                                        <div class="carousel-track"></div>
+                                        <button class="carousel-btn prev">
+                                            <i class="fas fa-chevron-left text-sm"></i>
+                                        </button>
+                                        <button class="carousel-btn next">
+                                            <i class="fas fa-chevron-right text-sm"></i>
+                                        </button>
+                                        <div class="carousel-dots"></div>
+                                    </div>
+                                ` : ''}
+                                
+                                <!-- 概述 -->
+                                <div class="mb-5">
+                                    <h4 class="text-sm font-semibold text-gray-700 mb-2 flex items-center">
+                                        <i class="fas fa-info-circle text-primary mr-2 text-xs"></i>设计概述
+                                    </h4>
+                                    <p class="text-gray-600 text-sm leading-relaxed">
+                                        ${d.detail?.overview || d.desc || ''}
+                                    </p>
+                                </div>
+                                
+                                <!-- 核心设计/分析 -->
+                                <div class="mb-5">
+                                    <h4 class="text-sm font-semibold text-gray-700 mb-2 flex items-center">
+                                        <i class="fas fa-star text-secondary mr-2 text-xs"></i>核心内容
+                                    </h4>
+                                    <ul class="space-y-1.5">
+                                        ${(d.detail?.coreDesign || d.detail?.coreAnalysis || []).map(item => `
+                                            <li class="flex items-start text-sm text-gray-600">
+                                                <i class="fas fa-check text-secondary mt-1 mr-2 flex-shrink-0 text-xs"></i>
+                                                <span>${item}</span>
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
+                                
+                                <!-- 设计亮点/研究结论 -->
+                                ${d.detail?.designHighlights || d.detail?.researchConclusions ? `
+                                    <div>
+                                        <h4 class="text-sm font-semibold text-gray-700 mb-2 flex items-center">
+                                            <i class="fas fa-lightbulb text-yellow-500 mr-2 text-xs"></i>
+                                            ${d.detail?.designHighlights ? '设计亮点' : '研究结论'}
+                                        </h4>
+                                        <ul class="space-y-1.5">
+                                            ${(d.detail?.designHighlights || d.detail?.researchConclusions || []).map(item => `
+                                                <li class="flex items-start text-sm text-gray-600">
+                                                    <i class="fas fa-angle-right text-primary mt-1 mr-2 flex-shrink-0"></i>
+                                                    <span>${item}</span>
+                                                </li>
+                                            `).join('')}
+                                        </ul>
+                                    </div>
+                                ` : ''}
+                                
+                                <!-- 下载按钮 -->
+                                <div class="mt-5 pt-4 border-t border-gray-100">
+                                    <a href="${d.fileUrl || '#'}" target="_blank" 
+                                       class="inline-flex items-center text-primary text-sm font-medium hover:text-primary/80 transition-colors">
+                                        <i class="fas fa-download mr-2"></i>下载完整文档
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+                
+                designList.appendChild(item);
+                
+                // 初始化轮播
+                if (images.length > 0) {
+                    setTimeout(() => initCarousel(index, images), 100);
+                }
+            });
+        } else {
+            designList.innerHTML = `
+                <div class="text-center py-20">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
+                        <i class="fas fa-file-alt text-2xl text-gray-400"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-gray-500 mb-1">暂无内容</h3>
+                    <p class="text-gray-400 text-sm">敬请期待...</p>
+                </div>`;
+        }
+    }
+
+    // 异步加载 data.json 并更新
+    async function loadDataJson() {
+        try {
+            let res;
+            
+            // 先尝试本地加载（GitHub Pages 环境）
+            try {
+                res = await fetch(`data.json?t=${Date.now()}`);
+            } catch (e) {
+                // 本地 file:// 协议加载失败时，尝试从 GitHub 加载
+                try {
+                    res = await fetch(`https://raw.githubusercontent.com/${CONFIG.owner}/${CONFIG.repo}/${CONFIG.branch}/data.json?t=${Date.now()}`);
+                } catch (e2) {
+                    return; // 都失败了就保持默认数据
+                }
+            }
+            
+            if (res.ok) {
+                const data = await res.json();
+                renderDesigns(data);
+            }
+        } catch (e) {
+            // 静默失败，保持默认数据
+        }
+    }
+
+    // 初始化
+    window.addEventListener('DOMContentLoaded', () => {
+        // 1. 立即用默认数据渲染（首屏无闪烁）
+        renderDesigns({ name: '平行弧线/桃', designs: null });
+        // 2. 异步加载 data.json，成功则更新数据
+        loadDataJson();
+    });
+</script>
+</body>
+</html>

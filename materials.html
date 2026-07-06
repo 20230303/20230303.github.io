@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图像素材 - 个人主页</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#10b981',
+                        dark: '#1f2937',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto { content-visibility: auto; }
+            .card-hover { @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1; }
+        }
+        html { scroll-behavior: smooth; }
+        
+        /* 内容上浮动画 */
+        .fade-up {
+            animation: fadeUp 0.8s ease-out;
+        }
+        @keyframes fadeUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* 图片灯箱效果 */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+        }
+        .lightbox.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .lightbox-close:hover {
+            color: #bbb;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+
+<!-- 顶部导航 -->
+<nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+    <div class="container mx-auto px-4 md:px-8 py-4">
+        <div class="flex justify-center items-center space-x-4">
+            <a href="index.html" class="text-gray-600 hover:text-primary transition-colors">首页</a>
+            <span class="text-gray-300">|</span>
+            <a href="games.html" class="text-gray-600 hover:text-primary transition-colors">游戏作品</a>
+            <span class="text-gray-300">|</span>
+            <a href="designs.html" class="text-gray-600 hover:text-primary transition-colors">设计拆解</a>
+            <span class="text-gray-300">|</span>
+            <a href="materials.html" class="text-primary font-medium">图像素材</a>
+        </div>
+    </div>
+</nav>
+
+<!-- 页面标题区 -->
+<header class="bg-white border-b border-gray-100 py-8">
+    <div class="container mx-auto px-4 md:px-8 fade-up">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex items-center">
+                <div class="bg-primary/10 text-primary p-3 rounded-xl mr-4">
+                    <i class="fas fa-palette text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">图像素材</h1>
+                    <p class="text-gray-500 text-sm">游戏美术素材与视觉设计作品，涵盖像素画、UI 素材、场景概念与图标设计</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- 素材列表 -->
+<main class="flex-1 py-10">
+    <div class="container mx-auto px-4 md:px-8">
+        <div id="materialList" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
+            <div class="col-span-full flex justify-center items-center py-12 text-gray-500">
+                <i class="fas fa-spinner fa-spin mr-2"></i> 加载图像素材中...
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- 图片灯箱 -->
+<div id="lightbox" class="lightbox">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightboxImg" src="" alt="素材预览">
+</div>
+
+<!-- 页脚 -->
+<footer class="bg-dark text-white py-12">
+    <div class="container mx-auto px-4 md:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0">
+                <h3 class="text-2xl font-bold mb-2" id="footerTitle">个人主页</h3>
+                <p class="text-gray-400" id="footerCopyright">© 2026 保留所有权利</p>
+            </div>
+            <div class="flex space-x-6">
+                <a href="https://github.com/20230303" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fab fa-github text-xl"></i>
+                </a>
+                <a href="https://space.bilibili.com/496677580?spm_id_from=333.1007.0.0" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fab fa-bilibili text-xl"></i>
+                </a>
+                <a href="mailto:kang7520@foxmail.com" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fas fa-envelope text-xl"></i>
+                </a>
+                <a href="admin.html" class="text-gray-400 hover:text-white transition-colors" title="管理后台">
+                    <i class="fas fa-cog text-xl"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const CONFIG = {
+        owner: "20230303",
+        repo: "20230303.github.io",
+        branch: "main"
+    };
+
+    // 默认素材数据
+    const DEFAULT_MATERIALS = [
+        { url: "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/materials/1775429856622_6426.png" },
+        { url: "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/materials/1775429855128_6425.png" },
+        { url: "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/materials/1775429853605_6424.png" },
+        { url: "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/materials/1775429852123_6423.png" },
+        { url: "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/materials/1775429850767_6422.png" },
+        { url: "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/materials/1775429849125_6421.png" },
+        { url: "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/materials/1775429847669_6420.png" },
+        { url: "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/materials/1775429846031_6390.png" },
+        { url: "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/materials/1775428678399_Runes_inspiration.png" },
+        { url: "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/materials/1773588846681-1-__.png" },
+        { url: "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/materials/1773588842400-0-____.png" }
+    ];
+
+    // 打开灯箱
+    function openLightbox(imgSrc) {
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        lightboxImg.src = imgSrc;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    // 关闭灯箱
+    function closeLightbox() {
+        const lightbox = document.getElementById('lightbox');
+        lightbox.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    // 渲染素材列表
+    function renderMaterials(data) {
+        const materials = data.materials && data.materials.length > 0 ? data.materials : DEFAULT_MATERIALS;
+
+        document.title = `图像素材 - ${data.name || '个人主页'}`;
+        document.getElementById("footerTitle").innerText = data.name || '个人主页';
+        document.getElementById("footerCopyright").innerText = `© 2026 ${data.name || ''}. 保留所有权利`;
+
+        // 素材
+        const matList = document.getElementById("materialList");
+        if (materials.length) {
+            matList.innerHTML = "";
+            materials.forEach((m, index) => {
+                const div = document.createElement("div");
+                div.className = "group relative rounded-xl overflow-hidden card-hover shadow-sm fade-up cursor-pointer";
+                div.style.animationDelay = `${index * 0.05}s`;
+                div.style.animationFillMode = "both";
+                div.innerHTML = `
+                    <img src="${m.url}" class="w-full h-32 object-cover" onerror="this.src='https://via.placeholder.com/200x120?text=Material'">
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="text-white text-sm px-4 py-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                            <i class="fas fa-expand mr-1"></i>查看
+                        </span>
+                    </div>`;
+                div.addEventListener('click', () => openLightbox(m.url));
+                matList.appendChild(div);
+            });
+        } else {
+            matList.innerHTML = `
+                <div class="col-span-full text-center py-20">
+                    <div class="inline-flex items-center justify-center w-20 h-20 bg-gray-100 rounded-full mb-6">
+                        <i class="fas fa-images text-3xl text-gray-400"></i>
+                    </div>
+                    <h3 class="text-xl font-medium text-gray-500 mb-2">暂无素材</h3>
+                    <p class="text-gray-400">敬请期待...</p>
+                </div>`;
+        }
+    }
+
+    // 异步加载 data.json 并更新
+    async function loadDataJson() {
+        try {
+            let res;
+            
+            // 先尝试本地加载（GitHub Pages 环境）
+            try {
+                res = await fetch(`data.json?t=${Date.now()}`);
+            } catch (e) {
+                // 本地 file:// 协议加载失败时，尝试从 GitHub 加载
+                try {
+                    res = await fetch(`https://raw.githubusercontent.com/${CONFIG.owner}/${CONFIG.repo}/${CONFIG.branch}/data.json?t=${Date.now()}`);
+                } catch (e2) {
+                    return; // 都失败了就保持默认数据
+                }
+            }
+            
+            if (res.ok) {
+                const data = await res.json();
+                renderMaterials(data);
+            }
+        } catch (e) {
+            // 静默失败，保持默认数据
+        }
+    }
+
+    // 初始化
+    window.addEventListener('DOMContentLoaded', () => {
+        // 灯箱事件绑定
+        const lightbox = document.getElementById('lightbox');
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+
+        // 1. 立即用默认数据渲染（首屏无闪烁）
+        renderMaterials({ name: '平行弧线/桃', materials: null });
+        // 2. 异步加载 data.json，成功则更新数据
+        loadDataJson();
+    });
+</script>
+</body>
+</html>

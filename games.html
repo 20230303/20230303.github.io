@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏作品 - 个人主页</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#10b981',
+                        dark: '#1f2937',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto { content-visibility: auto; }
+            .card-hover { @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1; }
+        }
+        html { scroll-behavior: smooth; }
+        
+        /* 内容上浮动画 */
+        .fade-up {
+            animation: fadeUp 0.8s ease-out;
+        }
+        @keyframes fadeUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 展开动画 */
+        .game-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.3s ease;
+        }
+        .game-detail.expanded {
+            max-height: 2000px;
+            transition: max-height 0.8s ease-in;
+        }
+        
+        /* 旋转箭头 */
+        .expand-arrow {
+            transition: transform 0.3s ease;
+        }
+        .expanded .expand-arrow {
+            transform: rotate(180deg);
+        }
+        
+        /* 图片轮播 */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .carousel-slide {
+            min-width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+        .carousel-btn:hover {
+            background: rgba(0,0,0,0.7);
+        }
+        .carousel-btn.prev { left: 10px; }
+        .carousel-btn.next { right: 10px; }
+        .carousel-dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .carousel-dot.active {
+            background: white;
+        }
+        
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+
+<!-- 顶部导航 -->
+<nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+    <div class="container mx-auto px-4 md:px-8 py-4">
+        <div class="flex justify-center items-center space-x-4">
+            <a href="index.html" class="text-gray-600 hover:text-primary transition-colors">首页</a>
+            <span class="text-gray-300">|</span>
+            <a href="games.html" class="text-primary font-medium">游戏作品</a>
+            <span class="text-gray-300">|</span>
+            <a href="designs.html" class="text-gray-600 hover:text-primary transition-colors">设计拆解</a>
+            <span class="text-gray-300">|</span>
+            <a href="materials.html" class="text-gray-600 hover:text-primary transition-colors">图像素材</a>
+        </div>
+    </div>
+</nav>
+
+<!-- 页面标题区 -->
+<header class="bg-white border-b border-gray-100 py-8">
+    <div class="container mx-auto px-4 md:px-8 fade-up">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex items-center">
+                <div class="bg-primary/10 text-primary p-3 rounded-xl mr-4">
+                    <i class="fas fa-gamepad text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">游戏作品</h1>
+                    <p class="text-gray-500 text-sm">参与开发与独立制作的游戏项目，涵盖商业手游、同人 Mod 等多个品类</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- 游戏作品列表 -->
+<main class="flex-1 py-10">
+    <div class="container mx-auto px-4 md:px-8">
+        <div id="gameList" class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div class="col-span-full flex justify-center items-center py-12 text-gray-500">
+                <i class="fas fa-spinner fa-spin mr-2"></i> 加载游戏作品中...
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- 页脚 -->
+<footer class="bg-dark text-white py-12">
+    <div class="container mx-auto px-4 md:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0">
+                <h3 class="text-2xl font-bold mb-2" id="footerTitle">个人主页</h3>
+                <p class="text-gray-400" id="footerCopyright">© 2026 保留所有权利</p>
+            </div>
+            <div class="flex space-x-6">
+                <a href="https://github.com/20230303" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fab fa-github text-xl"></i>
+                </a>
+                <a href="https://space.bilibili.com/496677580?spm_id_from=333.1007.0.0" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fab fa-bilibili text-xl"></i>
+                </a>
+                <a href="mailto:kang7520@foxmail.com" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fas fa-envelope text-xl"></i>
+                </a>
+                <a href="admin.html" class="text-gray-400 hover:text-white transition-colors" title="管理后台">
+                    <i class="fas fa-cog text-xl"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const CONFIG = {
+        owner: "20230303",
+        repo: "20230303.github.io",
+        branch: "main"
+    };
+
+    // 默认游戏数据（带详细信息）
+    const DEFAULT_GAMES = [
+        {
+            title: "诸神国度",
+            subtitle: "奇迹 MU 类魔幻手游",
+            desc: "一款经典奇迹 MU 题材的 ARPG 手游，主打爽快战斗与深度养成系统。",
+            imgUrl: "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/games/1775431385775_微信图片_2026-04-06_071238_505.jpg",
+            images: [
+                "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/games/1775431385775_微信图片_2026-04-06_071238_505.jpg"
+            ],
+            tags: ["Unity", "ARPG", "手游", "数值策划"],
+            role: "战斗数值策划",
+            status: "已上线",
+            detail: {
+                overview: "《诸神国度》是一款基于经典奇迹 MU IP 打造的魔幻题材 ARPG 手游。游戏延续了奇迹系列的经典玩法，包括战士、法师、弓箭手三大职业，以及卓越装备、翅膀系统、血色城堡、恶魔广场等经典内容。",
+                features: [
+                    "经典三职业体系，每个职业拥有独特的技能树与成长路线",
+                    "卓越装备系统，支持多属性随机组合与套装效果",
+                    "翅膀进阶系统，从初级翅膀到终极神翼的完整成长线",
+                    "血色城堡、恶魔广场等经典副本玩法的移动端还原",
+                    "跨服盟战系统，支持千人同屏的大型 PVP 战斗"
+                ],
+                responsibilities: [
+                    "负责战斗数值体系的设计与平衡，包括职业技能、属性成长曲线",
+                    "参与装备系统数值规划，制定卓越属性的掉落概率与价值体系",
+                    "搭建怪物数值模型，设计不同难度副本的怪物属性配置",
+                    "跟进测试反馈，持续调整职业平衡与游戏经济系统"
+                ]
+            }
+        },
+        {
+            title: "LOL 装备 Mod",
+            subtitle: "《杀戮尖塔》同人 Mod",
+            desc: "为《杀戮尖塔》制作的英雄联盟主题 Mod，新增 40 余件 LOL 装备与相关机制。",
+            imgUrl: "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/games/1775429384564_image.jpg",
+            images: [
+                "https://raw.githubusercontent.com/20230303/20230303.github.io/main/assets/games/1775429384564_image.jpg"
+            ],
+            tags: ["Mod开发", "杀戮尖塔", "卡牌游戏", "独立制作"],
+            role: "独立开发者",
+            status: "暂停更新",
+            detail: {
+                overview: "这是一款为 Roguelike 卡牌游戏《杀戮尖塔》制作的英雄联盟主题 Mod。项目将英雄联盟中的经典装备、道具机制融入到杀戮尖塔的卡牌战斗体系中，为玩家带来全新的构筑体验。",
+                features: [
+                    "新增 40 余件英雄联盟经典装备，每件装备都有独特的被动效果",
+                    "引入装备合成系统，玩家可通过收集散件合成强力神装",
+                    "设计专属遗物与事件，丰富游戏流程的随机性与策略性",
+                    "平衡适配四个职业的装备池，确保每个职业都有多种构筑路线",
+                    "完整的中文本地化支持，装备描述贴合 LOL 玩家的认知习惯"
+                ],
+                responsibilities: [
+                    "独立完成 Mod 的整体设计与代码实现",
+                    "设计装备效果与数值平衡，确保与原版游戏的兼容性",
+                    "制作装备图标与相关美术资源",
+                    "收集社区反馈，持续迭代优化版本"
+                ]
+            }
+        }
+    ];
+
+    let currentGames = DEFAULT_GAMES;
+
+    // 图片轮播功能
+    function initCarousel(cardId, images) {
+        const container = document.getElementById(`carousel-${cardId}`);
+        if (!container || images.length <= 1) return;
+
+        const track = container.querySelector('.carousel-track');
+        const dotsContainer = container.querySelector('.carousel-dots');
+        let currentIndex = 0;
+
+        // 创建图片
+        track.innerHTML = images.map(img => 
+            `<img src="${img}" class="carousel-slide" onerror="this.src='https://picsum.photos/800/400?text=Game'">`
+        ).join('');
+
+        // 创建指示点
+        dotsContainer.innerHTML = images.map((_, i) => 
+            `<span class="carousel-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></span>`
+        ).join('');
+
+        // 切换图片
+        function goToSlide(index) {
+            currentIndex = (index + images.length) % images.length;
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            dotsContainer.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
+            });
+        }
+
+        // 按钮事件
+        container.querySelector('.prev').addEventListener('click', () => goToSlide(currentIndex - 1));
+        container.querySelector('.next').addEventListener('click', () => goToSlide(currentIndex + 1));
+
+        // 指示点事件
+        dotsContainer.querySelectorAll('.carousel-dot').forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                goToSlide(parseInt(e.target.dataset.index));
+            });
+        });
+    }
+
+    // 切换展开/收起
+    function toggleDetail(cardId) {
+        const detail = document.getElementById(`detail-${cardId}`);
+        const card = document.getElementById(`card-${cardId}`);
+        const isExpanded = detail.classList.contains('expanded');
+
+        if (isExpanded) {
+            detail.classList.remove('expanded');
+            card.classList.remove('expanded');
+        } else {
+            detail.classList.add('expanded');
+            card.classList.add('expanded');
+        }
+    }
+
+    // 渲染游戏列表
+    function renderGames(data) {
+        // 处理游戏数据
+        if (data.games && data.games.length > 0) {
+            // 为 data.json 中的简单数据补充默认详情结构
+            currentGames = data.games.map((g, i) => ({
+                ...DEFAULT_GAMES[i % DEFAULT_GAMES.length],
+                ...g
+            }));
+        } else {
+            currentGames = DEFAULT_GAMES;
+        }
+
+        document.title = `游戏作品 - ${data.name || '个人主页'}`;
+        document.getElementById("footerTitle").innerText = data.name || '个人主页';
+        document.getElementById("footerCopyright").innerText = `© 2026 ${data.name || ''}. 保留所有权利`;
+
+        // 渲染游戏列表
+        const gameList = document.getElementById("gameList");
+        if (currentGames.length) {
+            gameList.innerHTML = "";
+            currentGames.forEach((g, index) => {
+                const card = document.createElement("div");
+                card.id = `card-${index}`;
+                card.className = "bg-white rounded-2xl shadow-md overflow-hidden fade-up";
+                card.style.animationDelay = `${index * 0.15}s`;
+                card.style.animationFillMode = "both";
+                
+                const images = g.images || [g.imgUrl];
+                
+                card.innerHTML = `
+                    <!-- 卡片头部（可点击展开） -->
+                    <div class="cursor-pointer" onclick="toggleDetail(${index})">
+                        <div class="relative overflow-hidden">
+                            <img src="${g.imgUrl}" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-105" onerror="this.src='https://picsum.photos/800/400?text=Game'">
+                            <div class="absolute top-4 right-4">
+                                <span class="bg-white/90 backdrop-blur-sm text-gray-700 text-xs px-3 py-1 rounded-full font-medium">
+                                    ${g.status || '开发中'}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-800">${g.title}</h3>
+                                    <p class="text-primary text-sm font-medium">${g.subtitle || ''}</p>
+                                </div>
+                                <i class="fas fa-chevron-down expand-arrow text-gray-400 mt-2"></i>
+                            </div>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-4">${g.desc || ''}</p>
+                            <div class="flex flex-wrap gap-2">
+                                ${(g.tags || []).map(tag => 
+                                    `<span class="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full">${tag}</span>`
+                                ).join('')}
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-gray-100 flex items-center text-sm text-gray-500">
+                                <i class="fas fa-user-tag mr-2"></i>
+                                <span>职责：${g.role || '参与开发'}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 展开详情 -->
+                    <div id="detail-${index}" class="game-detail">
+                        <div class="px-6 pb-6 pt-2 border-t border-gray-100">
+                            <!-- 图片轮播 -->
+                            <div id="carousel-${index}" class="carousel-container mb-6">
+                                <div class="carousel-track"></div>
+                                <button class="carousel-btn prev">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button class="carousel-btn next">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                                <div class="carousel-dots"></div>
+                            </div>
+                            
+                            <!-- 项目概述 -->
+                            <div class="mb-6">
+                                <h4 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                    <i class="fas fa-info-circle text-primary mr-2"></i>项目概述
+                                </h4>
+                                <p class="text-gray-600 text-sm leading-relaxed">
+                                    ${g.detail?.overview || g.desc || ''}
+                                </p>
+                            </div>
+                            
+                            <!-- 核心特性 -->
+                            <div class="mb-6">
+                                <h4 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                    <i class="fas fa-star text-secondary mr-2"></i>核心特性
+                                </h4>
+                                <ul class="space-y-2">
+                                    ${(g.detail?.features || []).map(f => `
+                                        <li class="flex items-start text-sm text-gray-600">
+                                            <i class="fas fa-check text-secondary mt-1 mr-3 flex-shrink-0"></i>
+                                            <span>${f}</span>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            </div>
+                            
+                            <!-- 个人职责 -->
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                    <i class="fas fa-briefcase text-primary mr-2"></i>个人职责
+                                </h4>
+                                <ul class="space-y-2">
+                                    ${(g.detail?.responsibilities || []).map(r => `
+                                        <li class="flex items-start text-sm text-gray-600">
+                                            <i class="fas fa-angle-right text-primary mt-1 mr-3 flex-shrink-0"></i>
+                                            <span>${r}</span>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>`;
+                
+                gameList.appendChild(card);
+                
+                // 初始化轮播
+                setTimeout(() => initCarousel(index, images), 100);
+            });
+        } else {
+            gameList.innerHTML = `
+                <div class="col-span-full text-center py-20">
+                    <div class="inline-flex items-center justify-center w-20 h-20 bg-gray-100 rounded-full mb-6">
+                        <i class="fas fa-gamepad text-3xl text-gray-400"></i>
+                    </div>
+                    <h3 class="text-xl font-medium text-gray-500 mb-2">暂无游戏作品</h3>
+                    <p class="text-gray-400">敬请期待...</p>
+                </div>`;
+        }
+    }
+
+    // 异步加载 data.json 并更新
+    async function loadDataJson() {
+        try {
+            let res;
+            
+            // 先尝试本地加载（GitHub Pages 环境）
+            try {
+                res = await fetch(`data.json?t=${Date.now()}`);
+            } catch (e) {
+                // 本地 file:// 协议加载失败时，尝试从 GitHub 加载
+                try {
+                    res = await fetch(`https://raw.githubusercontent.com/${CONFIG.owner}/${CONFIG.repo}/${CONFIG.branch}/data.json?t=${Date.now()}`);
+                } catch (e2) {
+                    return; // 都失败了就保持默认数据
+                }
+            }
+            
+            if (res.ok) {
+                const data = await res.json();
+                renderGames(data);
+            }
+        } catch (e) {
+            // 静默失败，保持默认数据
+        }
+    }
+
+    // 初始化
+    window.addEventListener('DOMContentLoaded', () => {
+        // 1. 立即用默认数据渲染（首屏无闪烁）
+        renderGames({ name: '平行弧线/桃', games: null });
+        // 2. 异步加载 data.json，成功则更新数据
+        loadDataJson();
+    });
+</script>
+</body>
+</html>
