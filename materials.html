@@ -6,7 +6,6 @@
     <title>图像素材 - 个人主页</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="assets/js/canvas-nest.min.js"></script>
     
     <script>
         tailwind.config = {
@@ -31,18 +30,6 @@
             .card-hover { @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1; }
         }
         html { scroll-behavior: smooth; }
-        .particle-layer {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        .particle-layer canvas {
-            display: block;
-            width: 100%;
-            height: 100%;
-        }
         
         /* 内容上浮动画 */
         .fade-up {
@@ -145,9 +132,8 @@
 </header>
 
 <!-- 素材列表 -->
-<main class="relative flex-1 py-10 overflow-hidden">
-    <div id="pageParticleLayer" class="particle-layer"></div>
-    <div class="relative z-10 container mx-auto px-4 md:px-8">
+<main class="flex-1 py-10">
+    <div class="container mx-auto px-4 md:px-8">
         <div id="materialList" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
             <div class="col-span-full flex justify-center items-center py-12 text-gray-500">
                 <i class="fas fa-spinner fa-spin mr-2"></i> 加载图像素材中...
@@ -194,24 +180,6 @@
         repo: "20230303.github.io",
         branch: "main"
     };
-
-    function initParticleBackground(containerId, options = {}) {
-        const container = document.getElementById(containerId);
-        if (!container || typeof window.CanvasNest !== 'function') return;
-        if (container.dataset.particleInitialized === 'true') return;
-
-        container.dataset.particleInitialized = 'true';
-        new window.CanvasNest(container, {
-            color: '99,102,241',
-            pointColor: '16,185,129',
-            count: 70,
-            opacity: 0.7,
-            zIndex: -1,
-            lineWidth: 0.5,
-            dist: 170,
-            ...options
-        });
-    }
 
     // 默认素材数据
     const DEFAULT_MATERIALS = [
@@ -323,8 +291,6 @@
                 closeLightbox();
             }
         });
-
-        initParticleBackground('pageParticleLayer');
 
         // 1. 立即用默认数据渲染（首屏无闪烁）
         renderMaterials({ name: '平行弧线/桃', materials: null });
